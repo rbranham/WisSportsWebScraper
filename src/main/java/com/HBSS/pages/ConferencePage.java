@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class ConferencePage extends PageSuper {
 
@@ -38,6 +39,24 @@ public class ConferencePage extends PageSuper {
 	}
 	
 	//Change Season
+	public void changeSeasonTo(String seasonText) {
+		openSeasonCallout();
+		//Select seasonDropdown = new Select(driver.findElement(seasonCallout).findElement(By.xpath(".//div[1]/select")));
+		WebElement dropdown = driver.findElement(seasonCallout).findElement(By.xpath(".//div[2]/select"));
+		//String p = "//optgroup[@label=";
+		dropdown.findElement(By.xpath("//optgroup[@label='2019-20']/option"))
+				.click(); //Should open page
+		
+		
+		//*[@id="megaDropDown-season-callout"]/div[2]/select
+		//*[@id="megaDropDown-season-callout"]/div[1]
+		//*[@id="megaDropDown-season-callout"]/div[2]/select/optgroup[1]
+	}
+	
+	//Open season dropdown
+	private void openSeasonCallout() {
+		driver.findElement(seasonDropDown).click();
+	}
 	
 	
 	//Read Table

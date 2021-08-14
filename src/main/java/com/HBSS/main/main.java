@@ -25,16 +25,21 @@ public class main {
 				
 		customSleep();
 		
-		ArrayList<TeamSeasonQuickStats> temp = indianHead.readStatsTable();
+		indianHead.changeSeasonTo("2019-20");
 		
-		for(TeamSeasonQuickStats q : temp) {
-			System.out.println(q);
-		}
+		customSleep();
+		
+//		ArrayList<TeamSeasonQuickStats> temp = indianHead.readStatsTable();
+//		
+//		for(TeamSeasonQuickStats q : temp) {
+//			System.out.println(q);
+//		}
 		
 	}
 	
 	private static void customSleep() {
 		try {
+			System.out.println("Sleeping");
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
