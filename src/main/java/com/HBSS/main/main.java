@@ -1,6 +1,7 @@
 package com.HBSS.main;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,13 +20,15 @@ public class main {
 		WebDriver driver = new ChromeDriver(); 	
 		
 		//TODO: Add fluent wait to driver? 
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
 		ConferencePage indianHead = new ConferencePage(driver);
 		indianHead.goTo(INDIANHEAD_STRING);
 				
 		customSleep();
 		
-		indianHead.changeSeasonTo("2019-20");
+		//indianHead.changeSeasonTo("2019-20");
+		indianHead.getStatsForSeasonList(ConferencePage.yearString);
 		
 		customSleep();
 		

@@ -2,6 +2,7 @@ package com.HBSS.pages;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.HBSS.pages.PageSuper;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,14 +10,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class ConferencePage extends PageSuper {
-
+	
+	final public static String[] yearString = new String[] {
+		"2019-20",
+		"2018-19",
+		"2017-18"
+	};
 	
 	//Constants
 	final private String BASE_URL = "https://www.wissports.net"; //This value could be refactored into wissports superclass
 	final private String CONFERENCE_PAGE_POINT = "/page/show";
 	final private String FULL_URL = BASE_URL + CONFERENCE_PAGE_POINT; 
 	
-	//Useful By locators for finding WebElements
+	//Useful By locators for finding important WebElements
 	final private By seasonDropDown = By.id("megaDropDown-season");
 	final private By seasonCallout = By.id("megaDropDown-season-callout");
 	final private By statTable = By.className("statTable");
@@ -26,38 +32,53 @@ public class ConferencePage extends PageSuper {
 		super(driver);
 	}
 	
+	//Conference value is actualy for each season for each conference. But only need to get onto one page and then can naviagate to each season through clicks on dropdown
 	public void goTo(String conferenceValue) {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
 	
-	//Get current season TODO: Not working
-	private String getSelectedSeasonString() {
-		String s = ""; //Stubbed
-		// Xpath: //*[@id="megaDropDown-season"]/span[2]
+	public ArrayList<ArrayList<TeamSeasonQuickStats>>  getStatsForSeasonList(String[] seasonStrings){
 		
-		return s;
+		ArrayList<ArrayList<TeamSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamSeasonQuickStats>>();
+		
+		//Should check if current page matches one in the string array and delete it if so
+		masterList.add(readStatsTable());
+		
+		//Go through each season and get stats
+		for(String s: seasonStrings) {
+			
+			changeSeasonTo(s);
+			
+			masterList.add(
+					readStatsTable()
+					);
+			
+		}
+		
+		return masterList;
+		
 	}
 	
 	//Change Season
 	public void changeSeasonTo(String seasonText) {
+		
 		openSeasonCallout();
-		//Select seasonDropdown = new Select(driver.findElement(seasonCallout).findElement(By.xpath(".//div[1]/select")));
+		
 		WebElement dropdown = driver.findElement(seasonCallout).findElement(By.xpath(".//div[2]/select"));
-		//String p = "//optgroup[@label=";
-		dropdown.findElement(By.xpath("//optgroup[@label='2019-20']/option"))
+
+		String s = "//optgroup[@label='"
+				+ seasonText
+				+ "']/option";
+		
+		dropdown.findElement(By.xpath(s))
 				.click(); //Should open page
 		
-		
-		//*[@id="megaDropDown-season-callout"]/div[2]/select
-		//*[@id="megaDropDown-season-callout"]/div[1]
-		//*[@id="megaDropDown-season-callout"]/div[2]/select/optgroup[1]
 	}
 	
 	//Open season dropdown
 	private void openSeasonCallout() {
 		driver.findElement(seasonDropDown).click();
 	}
-	
 	
 	//Read Table
 	public ArrayList<TeamSeasonQuickStats> readStatsTable(){
@@ -80,10 +101,7 @@ public class ConferencePage extends PageSuper {
 			
 		}
 		
-		
 		return tableContents;
 	}
-	
-	
 	
 }
