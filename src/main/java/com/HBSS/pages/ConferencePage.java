@@ -2,6 +2,8 @@ package com.HBSS.pages;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.PageSuper;
 
 import org.openqa.selenium.By;
@@ -37,12 +39,12 @@ public class ConferencePage extends PageSuper {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
 	
-	public ArrayList<ArrayList<TeamSeasonQuickStats>>  getStatsForSeasonList(String[] seasonStrings){
+	public ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>  getStatsForSeasonList(String[] seasonStrings, String currentPageSeason){
 		
-		ArrayList<ArrayList<TeamSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamSeasonQuickStats>>();
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>();
 		
 		//Should check if current page matches one in the string array and delete it if so
-		masterList.add(readStatsTable());
+		masterList.add(readStatsTable(currentPageSeason));
 		
 		//Go through each season and get stats
 		for(String s: seasonStrings) {
@@ -50,7 +52,7 @@ public class ConferencePage extends PageSuper {
 			changeSeasonTo(s);
 			
 			masterList.add(
-					readStatsTable()
+					readStatsTable(s)
 					);
 			
 		}
@@ -81,8 +83,8 @@ public class ConferencePage extends PageSuper {
 	}
 	
 	//Read Table
-	public ArrayList<TeamSeasonQuickStats> readStatsTable(){
-		ArrayList<TeamSeasonQuickStats> tableContents = new ArrayList<TeamSeasonQuickStats>();
+	public ArrayList<TeamConferenceSeasonQuickStats> readStatsTable(String season){
+		ArrayList<TeamConferenceSeasonQuickStats> tableContents = new ArrayList<TeamConferenceSeasonQuickStats>();
 		
 		List<WebElement> items = driver.findElement(statTable)
 				.findElements(By.xpath(".//tbody/tr"));
@@ -91,12 +93,13 @@ public class ConferencePage extends PageSuper {
 			
 			List<WebElement> e = i.findElements(By.xpath(".//td"));
 
-			tableContents.add(new TeamSeasonQuickStats(
+			tableContents.add(new TeamConferenceSeasonQuickStats(
 						e.get(0).getText(), // Name
 						Integer.parseInt(e.get(2).getText()), 
 						Integer.parseInt(e.get(3).getText()),
 						e.get(4).getText(),
-						e.get(5).getText()
+						e.get(5).getText(),
+						season
 					));
 			
 		}

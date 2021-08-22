@@ -28,7 +28,7 @@ public class main {
 		customSleep();
 		
 		//indianHead.changeSeasonTo("2019-20");
-		indianHead.getStatsForSeasonList(ConferencePage.yearString);
+		indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
 		
 		customSleep();
 		
