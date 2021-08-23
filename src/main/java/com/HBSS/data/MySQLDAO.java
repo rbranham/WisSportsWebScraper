@@ -3,7 +3,11 @@ package com.HBSS.data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import com.HBSS.models.Conference;
+import com.HBSS.models.Season;
+import com.HBSS.models.Team;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 
 /**
@@ -11,14 +15,14 @@ import com.HBSS.models.TeamConferenceSeasonQuickStats;
  */
 public class MySQLDAO implements DAOInterface {
 	
-	//Conneciton Settings Strings --------------------------
+	//Conneciton Settings Strings -------------------------------
 	//TODO: Find a way to read this in from a configuration files to keep off of repository
 	//Currently just using my local test database
 	final private String connectionString = "jdbc:mysql://127.0.0.1:3306/farm_managment_database"; 
 	final private String userString = "root";
 	final private String password = "Admin"; 
 	
-	//Constants -------------------------------------------
+	//Constants ------------------------------------------------
 	final private String DATABASE_STRING = "farm_managment_database"; //currently just local test database
 	
 	//Team Table
@@ -47,7 +51,7 @@ public class MySQLDAO implements DAOInterface {
 	final private String STATS_STREAK = "streak";
 	final private String STATS_OVERALL = "overall"; 
 	
-	//Initialization Code -----------------------------------
+	//Initialization Code --------------------------------------------
 	private Connection conn = null;
 	
 	public static DAOInterface getInstance() {
@@ -76,35 +80,101 @@ public class MySQLDAO implements DAOInterface {
             e.printStackTrace();
         }
 	}
+
+	
+	//Implemented methods ----------------------------------------------
 	
 	
-	//Implemented methods ---------------------------------------------
-	
-	public void setTeamRecord(TeamConferenceSeasonQuickStats stats) {
+	public void addSeason(Season s) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public int findTeam(String teamName, String conferenceName) {
+	public Season getSeason(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	public void addTeam() {
+	public Season getSeason(String seasonString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Season> getAllSeasons() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteSeason(int id) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void addConference(String name) {
+	public void updateSeason(Season s) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public int getConference(String name) {
+	public void addConference(Conference c) {
 		// TODO Auto-generated method stub
-		return 0;
-	} 
+		
+	}
+
+	public Conference getConference(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Conference> getAllConferences() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteConference(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addTeam(Team t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Team getTeam(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Team getTeam(String teamName, String town) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Team> getAllTeams() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteTeam(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addTeamRecord(TeamConferenceSeasonQuickStats stats) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForSeason(int conferenceId, int seasonId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	
+
 	
 }

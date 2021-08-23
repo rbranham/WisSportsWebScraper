@@ -1,25 +1,35 @@
 package com.HBSS.data;
 
-import com.HBSS.models.TeamConferenceSeasonQuickStats;
+import java.util.ArrayList;
+
+import com.HBSS.models.*;
 
 public interface DAOInterface {
 	
-	
 	//CRUD for a season
+	public void addSeason(Season s);
+	public Season getSeason(int id);
+	public Season getSeason(String seasonString); 
+	public ArrayList<Season> getAllSeasons(); 
+	public void deleteSeason(int id); 
+	public void updateSeason(Season s);
 	
+	//CRUD for a conference
+	public void addConference(Conference c);
+	public Conference getConference(int id); 
+	public ArrayList<Conference> getAllConferences();
+	public void deleteConference(int id); 
 	
-	//Set team record
-	public void setTeamRecord(TeamConferenceSeasonQuickStats stats);
-
-	//looks for existing team by teamName and town. Every school should be uniquily identifiable by these two attributes. 
-	//This method should return a -1 or some indicator that team was not found
-	public int findTeam(String teamName, String conferenceName);
+	//CRUD for Teams
+	public void addTeam(Team t); 
+	public Team getTeam(int id); 
+	public Team getTeam(String teamName, String town); //Assumes that name/town combination will always be unique. 
+	public ArrayList<Team> getAllTeams(); 
+	public void deleteTeam(int id); 
 	
-	//This method adds a new team to the team table. Should check first before 
-	public void addTeam(); 
-	
-	public void addConference(String name); 
-	public int getConference(String name); 
-	
+	//CRUD for ConferenceSeasonStats entry
+	public void addTeamRecord(TeamConferenceSeasonQuickStats stats);
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForSeason(int conferenceId, int seasonId);
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId);
 	
 }
