@@ -11,6 +11,9 @@ import com.HBSS.models.Team;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 
 /**
+ * Provides concrete implementation of {@link DAOInterface}. 
+ * This implementation is for a MySQL database.  
+ * 
  * @author Roger Branham
  */
 public class MySQLDAO implements DAOInterface {

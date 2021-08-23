@@ -4,6 +4,15 @@ import java.util.ArrayList;
 
 import com.HBSS.models.*;
 
+
+/**
+ * DAO Interface for interacting with database. 
+ * Provides a contract for {@link Team}, {@link Conference}, {@link Season}, 
+ * and {@link TeamConferenceSeasonQuickStats} data model classes. 
+ *  
+ * @author RogerB
+ *
+ */
 public interface DAOInterface {
 	
 	//CRUD for a season
