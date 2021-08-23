@@ -34,7 +34,7 @@ public class ConferencePage extends PageSuper {
 		super(driver);
 	}
 	
-	//Conference value is actualy for each season for each conference. But only need to get onto one page and then can naviagate to each season through clicks on dropdown
+	//Conference value is actually for each season for each conference. But only need to get onto one page and then can naviagate to each season through clicks on dropdown
 	public void goTo(String conferenceValue) {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
@@ -98,8 +98,8 @@ public class ConferencePage extends PageSuper {
 						Integer.parseInt(e.get(2).getText()), 
 						Integer.parseInt(e.get(3).getText()),
 						e.get(4).getText(),
-						e.get(5).getText(),
-						season
+						e.get(5).getText(), 							//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+						season											//TODO: Quick Hack change column number depending on season string, Or Find column position dynamically from header row. 
 					));
 			
 		}

@@ -4,6 +4,10 @@ import com.HBSS.models.TeamConferenceSeasonQuickStats;
 
 public interface DAOInterface {
 	
+	
+	//CRUD for a season
+	
+	
 	//Set team record
 	public void setTeamRecord(TeamConferenceSeasonQuickStats stats);
 

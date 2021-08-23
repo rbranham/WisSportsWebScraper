@@ -4,6 +4,9 @@
   <artifactId>HighschoolBasketballStatsScrapper</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
+  	<properties>
+    	<java.version>11</java.version>
+	</properties>
   
    <dependencies>
   
@@ -14,6 +17,13 @@
 	    <version>3.141.59</version>
 	</dependency>
   
+  <!-- https://projectlombok.org/setup/maven -->
+  <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.20</version>
+		<scope>provided</scope>
+	</dependency>
   
   </dependencies>
   

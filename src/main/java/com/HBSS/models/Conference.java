@@ -5,10 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
-public class Team {
-
+public class Conference {
+	
 	private int id; 
-	private String teamName; 
-	private String town;
+	private String conferenceName;
 	
 }

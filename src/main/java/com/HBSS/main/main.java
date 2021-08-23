@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.*;
 
 public class main {
@@ -28,9 +29,17 @@ public class main {
 		customSleep();
 		
 		//indianHead.changeSeasonTo("2019-20");
-		indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
 		
 		customSleep();
+		
+		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
+			
+			for(TeamConferenceSeasonQuickStats q : seasonList) {
+				System.out.println(q);
+			}
+			
+		}
 		
 //		ArrayList<TeamSeasonQuickStats> temp = indianHead.readStatsTable();
 //		

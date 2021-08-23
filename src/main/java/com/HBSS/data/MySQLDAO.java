@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.FMS.data.DAOInterface;
-import com.FMS.data.MySQLDAO;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 
 /**
@@ -21,7 +19,7 @@ public class MySQLDAO implements DAOInterface {
 	final private String password = "Admin"; 
 	
 	//Constants -------------------------------------------
-	final private String DATABASE_STRING = "farm_managment_database"; //currently just local table
+	final private String DATABASE_STRING = "farm_managment_database"; //currently just local test database
 	
 	//Team Table
 	final private String TEAM_TABLE = "teams"; 
