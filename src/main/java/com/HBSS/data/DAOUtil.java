@@ -5,8 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-//Borrowed From: https://balusc.omnifaces.org/2008/07/dao-tutorial-data-layer.html 
+//First three borrowed From: https://balusc.omnifaces.org/2008/07/dao-tutorial-data-layer.html 
 public final class DAOUtil {
 
     // Constructors -------------------------------------------------------------------------------
@@ -59,6 +61,8 @@ public final class DAOUtil {
      return (date != null) ? new Date(date.getTime()) : null;
     }
 	
+    // Rest of these @author Roger Branham
+    
     /**
      * Generates a select all sql query for a table
      * @param tableString
@@ -69,13 +73,51 @@ public final class DAOUtil {
     }
     
     /**
-     * Generates a select sql queary for a table, by ID
+     * Generates a select sql query for a table, by ID
      * @param tableString
      * @param idColumnString
      * @return String Select Query for an entry with an id in a table
      */
     public static String generateSelectFromTableById(String tableString, String idColumnString) {
     	return "SELECT * FROM " + tableString + " WHERE " + idColumnString + " = ?;"; 
+    }
+    
+    /**
+     * Generates a delete query for a table based on a column
+     * @param tableString
+     * @param columnString
+     * @return
+     */
+    public static String generateDeleteByOneColumn(String tableString, String columnString) {
+    	return "DELETE FROM " + tableString + " WHERE " + columnString + " = ?;" ;
+    }
+    
+    /**
+     * Generates an insert string for a list of column names
+     * @param tableString
+     * @param columnNames
+     * @return
+     */
+    public static String generateInsert(String tableString, ArrayList<String> columnNames) {
+    	
+    	StringBuilder sbColumnString = new StringBuilder(); 
+    	StringBuilder sbValuesString = new StringBuilder(); 
+    	
+    	//Pull the last one off to add without a trailing comma
+    	String lastColumn = columnNames.remove(columnNames.size() - 1); 
+    	
+    	for(String s : columnNames) {
+    		sbColumnString.append(s);
+    		sbColumnString.append(", ");
+    		
+    		sbValuesString.append("?, ");
+    	}
+    	
+    	sbColumnString.append(lastColumn); 
+    	sbValuesString.append("?"); 
+    	
+    	return "INSERT INTO " + tableString + " (" + sbColumnString.toString() + ") VALUES (" + sbValuesString.toString() + ");"; 
+    	
     }
 }
 
