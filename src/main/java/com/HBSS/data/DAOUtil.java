@@ -8,7 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-//First three borrowed From: https://balusc.omnifaces.org/2008/07/dao-tutorial-data-layer.html 
+/**
+ * Utility Class for writing SQL Queries
+ * @author Roger Branham
+ *
+ */
 public final class DAOUtil {
 
     // Constructors -------------------------------------------------------------------------------
@@ -18,7 +22,8 @@ public final class DAOUtil {
     }
 
     // Actions ------------------------------------------------------------------------------------
-
+    //First three borrowed From: https://balusc.omnifaces.org/2008/07/dao-tutorial-data-layer.html 
+    
     /**
      * Returns a PreparedStatement of the given connection, set with the given SQL query and the
      * given parameter values.
