@@ -100,6 +100,10 @@ public final class DAOUtil {
      */
     public static String generateInsert(String tableString, ArrayList<String> columnNames) {
     	
+    	//TODO: Write code to handle this edge case
+    	if(columnNames.size() <= 1)
+    		System.out.println("ERROR: can not handle arrays less than 2"); 
+    	
     	StringBuilder sbColumnString = new StringBuilder(); 
     	StringBuilder sbValuesString = new StringBuilder(); 
     	

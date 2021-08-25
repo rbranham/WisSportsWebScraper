@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.HBSS.models.Conference;
 import com.HBSS.models.Season;
@@ -59,6 +60,8 @@ public class MySQLDAO implements DAOInterface {
 			DAOUtil.generateSelectAllFromTable(SEASON_TABLE); //"SELECT * FROM " + SEASON_TABLE + ";"; 
 	final private String SQL_SEASON_GET_BY_ID =
 			DAOUtil.generateSelectFromTableById(SEASON_TABLE, SEASON_ID); //"SELECT * FROM " + SEASON_TABLE + " WHERE " + SEASON_ID + " = ?;"; 
+	final private String SQL_SEASON_DELETE =
+			DAOUtil.generateDeleteByOneColumn(SEASON_TABLE, SEASON_ID);
 	
 	
 	//Initialization Code --------------------------------------------
