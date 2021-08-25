@@ -59,6 +59,24 @@ public final class DAOUtil {
      return (date != null) ? new Date(date.getTime()) : null;
     }
 	
+    /**
+     * Generates a select all sql query for a table
+     * @param tableString
+     * @return String Select Query for a table, 
+     */
+    public static String generateSelectAllFromTable(String tableString) {
+    	return "SELECT * FROM " + tableString + ";";
+    }
+    
+    /**
+     * Generates a select sql queary for a table, by ID
+     * @param tableString
+     * @param idColumnString
+     * @return String Select Query for an entry with an id in a table
+     */
+    public static String generateSelectFromTableById(String tableString, String idColumnString) {
+    	return "SELECT * FROM " + tableString + " WHERE " + idColumnString + " = ?;"; 
+    }
 }
 
 

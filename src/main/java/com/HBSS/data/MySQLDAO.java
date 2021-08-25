@@ -36,7 +36,7 @@ public class MySQLDAO implements DAOInterface {
 	
 	//Season Stats Table 
 	final private String SEASON_TABLE = "basektball_seasons"; 
-	final private String SEASON_ID = "";
+	final private String SEASON_ID = "idbasektball_seasons";
 	final private String SEASON_STRING = "season_string";
 	
 	//Conference Table
@@ -53,6 +53,13 @@ public class MySQLDAO implements DAOInterface {
 	final private String STATS_LOSSES = "losses"; 
 	final private String STATS_STREAK = "streak";
 	final private String STATS_OVERALL = "overall"; 
+	
+	//SQL String Constants --------------------------------------------
+	final private String SQL_SEASON_GET_ALL = 
+			DAOUtil.generateSelectAllFromTable(SEASON_TABLE); //"SELECT * FROM " + SEASON_TABLE + ";"; 
+	final private String SQL_SEASON_GET_BY_ID =
+			DAOUtil.generateSelectFromTableById(SEASON_TABLE, SEASON_ID); //"SELECT * FROM " + SEASON_TABLE + " WHERE " + SEASON_ID + " = ?;"; 
+	
 	
 	//Initialization Code --------------------------------------------
 	private Connection conn = null;
