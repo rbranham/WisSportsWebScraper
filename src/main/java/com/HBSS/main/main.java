@@ -30,6 +30,15 @@ public class main {
 				DAOUtil.generateInsert("User", c)
 				);
 		
+//		ArrayList<String> c = new ArrayList<String>();
+//		
+//		c.add("email");
+//		
+//		
+//		System.out.println(
+//				DAOUtil.generateInsert("User", c)
+//				);
+		
 		
 	}
 	

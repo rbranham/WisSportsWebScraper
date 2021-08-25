@@ -99,26 +99,31 @@ public final class DAOUtil {
      * @return
      */
     public static String generateInsert(String tableString, ArrayList<String> columnNames) {
-    	
-    	//TODO: Write code to handle this edge case
-    	if(columnNames.size() <= 1)
-    		System.out.println("ERROR: can not handle arrays less than 2"); 
-    	
+    	  	
     	StringBuilder sbColumnString = new StringBuilder(); 
     	StringBuilder sbValuesString = new StringBuilder(); 
     	
-    	//Pull the last one off to add without a trailing comma
-    	String lastColumn = columnNames.remove(columnNames.size() - 1); 
-    	
-    	for(String s : columnNames) {
-    		sbColumnString.append(s);
-    		sbColumnString.append(", ");
+    	//Handle single value insert
+    	if(columnNames.size() == 1) {
+    		sbColumnString.append(columnNames.get(0));
+    		sbValuesString.append("?");
     		
-    		sbValuesString.append("?, ");
+    	} else {
+    		
+	    	//Pull the last one off to add without a trailing comma
+	    	String lastColumn = columnNames.remove(columnNames.size() - 1); 
+	    	
+	    	//Build the strings there should be a ? for every column so both strings can be built in the same loop
+	    	for(String s : columnNames) {
+	    		sbColumnString.append(s);
+	    		sbColumnString.append(", ");
+	    		
+	    		sbValuesString.append("?, ");
+	    	}
+	    	
+	    	sbColumnString.append(lastColumn); 
+	    	sbValuesString.append("?"); 
     	}
-    	
-    	sbColumnString.append(lastColumn); 
-    	sbValuesString.append("?"); 
     	
     	return "INSERT INTO " + tableString + " (" + sbColumnString.toString() + ") VALUES (" + sbValuesString.toString() + ");"; 
     	
