@@ -55,13 +55,69 @@ public class MySQLDAO implements DAOInterface {
 	final private String STATS_STREAK = "streak";
 	final private String STATS_OVERALL = "overall"; 
 	
-	//SQL String Constants --------------------------------------------
+	
+	//SQL Query Constants --------------------------------------------
+	
+	//CRUD for Season table
 	final private String SQL_SEASON_GET_ALL = 
 			DAOUtil.generateSelectAllFromTable(SEASON_TABLE); //"SELECT * FROM " + SEASON_TABLE + ";"; 
 	final private String SQL_SEASON_GET_BY_ID =
 			DAOUtil.generateSelectFromTableById(SEASON_TABLE, SEASON_ID); //"SELECT * FROM " + SEASON_TABLE + " WHERE " + SEASON_ID + " = ?;"; 
 	final private String SQL_SEASON_DELETE =
-			DAOUtil.generateDeleteByOneColumn(SEASON_TABLE, SEASON_ID);
+			DAOUtil.generateDeleteByOneColumn(SEASON_TABLE, SEASON_ID); 
+	final private String SQL_SEASON_INSERT =
+			DAOUtil.generateInsert(SEASON_TABLE, new ArrayList<String>(Arrays.asList(SEASON_STRING)));
+	
+	//CRUD for Conference table
+	final private String SQL_CONFERENCE_GET_ALL = 
+			DAOUtil.generateSelectAllFromTable(CONFERENCE_TABLE);  
+	final private String SQL_CONFERENCE_GET_BY_ID =
+			DAOUtil.generateSelectFromTableById(CONFERENCE_TABLE, CONFERENCE_ID); 
+	final private String SQL_CONFERENCE_DELETE =
+			DAOUtil.generateDeleteByOneColumn(CONFERENCE_TABLE, CONFERENCE_ID); 
+	final private String SQL_CONFERENCE_INSERT =
+			DAOUtil.generateInsert(CONFERENCE_TABLE, new ArrayList<String>(Arrays.asList(CONFERENCE_NAME)));
+	
+	//CRUD for team table
+	final private String SQL_TEAM_GET_ALL = 
+			DAOUtil.generateSelectAllFromTable(TEAM_TABLE);  
+	final private String SQL_TEAM_GET_BY_ID =
+			DAOUtil.generateSelectFromTableById(TEAM_TABLE, TEAM_ID); 
+	final private String SQL_TEAM_DELETE =
+			DAOUtil.generateDeleteByOneColumn(TEAM_TABLE, TEAM_ID); 
+	final private String SQL_TEAM_INSERT =
+			DAOUtil.generateInsert(TEAM_TABLE, new ArrayList<String>(Arrays.asList(TEAM_NAME, TEAM_TOWN)));
+	
+	
+	//This table is more complicated
+	
+	//Get all by conference - Not in interface, but may be useful later. 
+	final private String SQL_STATS_GET_ALL_FOR_CONF = 
+			DAOUtil.generateSelectFromTableById(STATS_TABLE, STATS_CONF_ID);
+	
+	//Get all by Team - Not in interface, but may be useful later. 
+	final private String SQL_STATS_GET_ALL_FOR_TEAM = 
+			DAOUtil.generateSelectFromTableById(STATS_TABLE, STATS_TEAM_ID);
+	
+	//TODO: Get by two parameters needed for these Strings
+	
+	//Conference Stats for Season
+	
+	//Conference Stats for Team
+	
+	
+	//Insert String, all ID codes are included here because they are all foreign keys
+	final private String SQL_STATS_INSERT = 
+			DAOUtil.generateInsert(STATS_TABLE, new ArrayList<String>(Arrays.asList(
+					STATS_TEAM_ID,
+					STATS_CONF_ID,
+					STATS_SEAS_ID,
+					STATS_WINS,
+					STATS_LOSSES,
+					STATS_STREAK,
+					STATS_OVERALL 
+					)));
+	
 	
 	
 	//Initialization Code --------------------------------------------

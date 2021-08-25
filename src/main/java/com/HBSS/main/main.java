@@ -48,7 +48,6 @@ public class main {
 		System.setProperty("webdriver.chrome.driver", DRIVER_PATH );  //C:\Users\Roger\Documents\Tools 
 		WebDriver driver = new ChromeDriver(); 	
 		
-		//TODO: Add fluent wait to driver? 
 		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
 		ConferencePage indianHead = new ConferencePage(driver);

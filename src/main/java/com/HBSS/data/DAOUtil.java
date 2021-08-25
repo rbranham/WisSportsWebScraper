@@ -83,6 +83,17 @@ public final class DAOUtil {
     }
     
     /**
+     * Generates a select sql query for a table, with multiple parameters
+     * @param tableString
+     * @param columnStrings
+     * @return
+     */
+    public static String generateSelectFromTableByMultipleParams(String tableString, List<String> columnStrings) {
+    	//TODO: Helper function for select by multiple equals parameters
+    	return "Stub";
+    }
+    
+    /**
      * Generates a delete query for a table based on a column
      * @param tableString
      * @param columnString
