@@ -17,5 +17,6 @@ the Page Object Model pattern, where there is a class for each page, with consta
 maintenance will be easier. 
 
 In addition to the web scrapping, a data access module has been included to write the data to a database. Since the information on the site does not change often, to reduce 
-load on the site best practice would be to read the data and write to an sql server. Then, any front end to display the data can be read from the database. 
+load on the site best practice would be to read the data and write to an sql server. Then, any front end to display the data can be read from the database. Only at the conclusion
+of a sports season would the webscrapper be run to collect new standings. 
 
