@@ -1,7 +1,12 @@
 package com.HBSS.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter 
 public class TeamConferenceSeasonQuickStats {
 	
+	//TODO: Change what the model holds to match database table. 
 	private String season; 
 	private String teamName; 
 	private int wins;
@@ -9,6 +14,11 @@ public class TeamConferenceSeasonQuickStats {
 	private String streak; 
 	private String overall;
 	
+	public TeamConferenceSeasonQuickStats() {
+		
+	}
+	
+	//TODO: Depreciate
 	public TeamConferenceSeasonQuickStats(String name, int wins, int losts, String streak, String overall, String season) {
 		this.teamName = name;
 		this.wins = wins;

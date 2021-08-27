@@ -2,6 +2,8 @@ package com.HBSS.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,9 +171,24 @@ public class MySQLDAO implements DAOInterface {
 		return null;
 	}
 
-	public ArrayList<Season> getAllSeasons() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Season> getAllSeasons() throws SQLException{
+		ArrayList<Season> seasons = new ArrayList();
+		
+		try(
+				//Could open connection here to keep not open the whole time
+				PreparedStatement statement = conn.prepareStatement(SQL_SEASON_GET_ALL); 
+				ResultSet resultSet = statement.executeQuery()
+				){
+			
+			while(resultSet.next()) {
+				seasons.add(mapSeason(resultSet)); 
+			}
+			
+		} catch (SQLException e) {
+			throw e; // Just pass along for now
+		}
+		
+		return seasons;
 	}
 
 	public void deleteSeason(int id) {
@@ -245,5 +262,34 @@ public class MySQLDAO implements DAOInterface {
 	}
 	
 
+	//Helpers for Mapping -----------------------------------------------------------------
+	
+	private Season mapSeason(ResultSet resultSet) throws SQLException {
+		Season season = new Season(); 
+		season.setId(resultSet.getInt(SEASON_ID));
+		season.setSeasonString(resultSet.getString(SEASON_STRING));
+		return season;
+	}
+	
+	private Conference mapConference(ResultSet resultSet) throws SQLException {
+		Conference c = new Conference();
+		c.setId(resultSet.getInt(CONFERENCE_ID));
+		c.setConferenceName(resultSet.getString(CONFERENCE_NAME));
+		return c; 
+	}
+	
+	private Team mapTeam(ResultSet resultSet) throws SQLException {
+		Team t = new Team(); 
+		t.setId(resultSet.getInt(TEAM_ID));
+		t.setTeamName(resultSet.getString("TEAM_NAME"));
+		t.setTown(resultSet.getString("TEAM_TOWN"));
+		return t; 
+	}
+	
+	private TeamConferenceSeasonQuickStats mapStats(ResultSet rs) throws SQLException {
+		TeamConferenceSeasonQuickStats q = new TeamConferenceSeasonQuickStats(); 
+		//TODO: Update when model class is finished. 
+		return q; 
+	}
 	
 }

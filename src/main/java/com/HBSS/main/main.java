@@ -18,17 +18,19 @@ public class main {
 	public static void main(String[] args) {
 		
 //		mainCode(); 
+//		
+//		ArrayList<String> c = new ArrayList<String>();
+//		
+//		c.add("email");
+//		c.add("password");
+//		c.add("firstname");
+//		
+//		
+//		System.out.println(
+//				DAOUtil.generateInsert("User", c)
+//				);
 		
-		ArrayList<String> c = new ArrayList<String>();
 		
-		c.add("email");
-		c.add("password");
-		c.add("firstname");
-		
-		
-		System.out.println(
-				DAOUtil.generateInsert("User", c)
-				);
 		
 //		ArrayList<String> c = new ArrayList<String>();
 //		

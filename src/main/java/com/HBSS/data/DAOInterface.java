@@ -1,5 +1,6 @@
 package com.HBSS.data;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.HBSS.models.*;
@@ -19,7 +20,7 @@ public interface DAOInterface {
 	public void addSeason(Season s);
 	public Season getSeason(int id);
 	public Season getSeason(String seasonString); 
-	public ArrayList<Season> getAllSeasons(); 
+	public ArrayList<Season> getAllSeasons() throws SQLException; 
 	public void deleteSeason(int id); 
 	public void updateSeason(Season s);
 	
