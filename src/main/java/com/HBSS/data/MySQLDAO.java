@@ -134,7 +134,7 @@ public class MySQLDAO implements DAOInterface {
         try {
         	
         	conn = DriverManager.getConnection(
-                    "jdbc:mysql://127.0.0.1:3306/farm_managment_database", "root", "Admin");
+                    "jdbc:mysql://127.0.0.1:3306/farm_managment_database", "balluser", "bball");
         	
 //        			DriverManager.getConnection(
 //                    connectionString, userString, password);
