@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class Season implements Serializable {
 
-	private int id; 
+	private Integer id; 
 	private String seasonString; 
 	
 }

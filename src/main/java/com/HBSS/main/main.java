@@ -1,12 +1,16 @@
 package com.HBSS.main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.HBSS.data.DAOInterface;
 import com.HBSS.data.DAOUtil;
+import com.HBSS.data.MySQLDAO;
+import com.HBSS.models.Season;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.*;
 
@@ -17,6 +21,23 @@ public class main {
 	
 	public static void main(String[] args) {
 		
+		//DAO manual testing
+		DAOInterface db = MySQLDAO.getInstance();
+		Season s = new Season(); 
+		s.setSeasonString("2019-20");
+		
+		
+		try {
+			db.addSeason(s);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Web Scrapping manual testing
 //		mainCode(); 
 //		
 //		ArrayList<String> c = new ArrayList<String>();
@@ -31,7 +52,7 @@ public class main {
 //				);
 		
 		
-		
+		//DAO Util manual testing
 //		ArrayList<String> c = new ArrayList<String>();
 //		
 //		c.add("email");

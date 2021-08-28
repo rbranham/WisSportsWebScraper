@@ -17,7 +17,7 @@ import com.HBSS.models.*;
 public interface DAOInterface {
 	
 	//CRUD for a season
-	public void addSeason(Season s);
+	public void addSeason(Season s) throws IllegalArgumentException, SQLException;
 	public Season getSeason(int id);
 	public Season getSeason(String seasonString); 
 	public ArrayList<Season> getAllSeasons() throws SQLException; 

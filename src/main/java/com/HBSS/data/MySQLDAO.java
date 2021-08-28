@@ -8,10 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.HBSS.models.Conference;
-import com.HBSS.models.Season;
-import com.HBSS.models.Team;
-import com.HBSS.models.TeamConferenceSeasonQuickStats;
+import com.HBSS.models.*;
+
 
 /**
  * Provides concrete implementation of {@link DAOInterface}. 
@@ -136,7 +134,10 @@ public class MySQLDAO implements DAOInterface {
         try {
         	
         	conn = DriverManager.getConnection(
-                    connectionString, userString, password);
+                    "jdbc:mysql://127.0.0.1:3306/farm_managment_database", "root", "Admin");
+        	
+//        			DriverManager.getConnection(
+//                    connectionString, userString, password);
         	
             if (conn != null) {
                 System.out.println("Connected to the database!");
@@ -156,8 +157,36 @@ public class MySQLDAO implements DAOInterface {
 	//Implemented methods ----------------------------------------------
 	
 	
-	public void addSeason(Season s) {
-		// TODO Auto-generated method stub
+	public void addSeason(Season s) throws IllegalArgumentException, SQLException{
+		//TODO: check if already exists, below code not working. 
+		if(s.getId() != null) { 
+			throw new IllegalArgumentException("Season already has an ID, and has been created"); 
+		}
+		
+		Object[] values = {
+				s.getSeasonString()
+		};
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_SEASON_INSERT, true, values);
+		){
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Creating season failed");
+			}
+			
+			try(ResultSet generatedKeys = statement.getGeneratedKeys()) {
+				if(generatedKeys.next()) {
+					s.setId(generatedKeys.getInt(1));
+				} else {
+					throw new SQLException("No generated key returned"); 
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 		
 	}
 
