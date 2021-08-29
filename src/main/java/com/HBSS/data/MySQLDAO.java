@@ -155,10 +155,11 @@ public class MySQLDAO implements DAOInterface {
 
 	
 	//Implemented methods ----------------------------------------------
-	
+	//TODO: Still a lot of boiler plate, could probably create generic add, delete, getall, getBy functions, and pass type, SQL string, and map function in
+	//Wanted to get everything functioning first, will go back and try refactoring later. 
 	
 	public void addSeason(Season s) throws IllegalArgumentException, SQLException{
-		//TODO: check if already exists, below code not working. 
+		
 		if(s.getId() != null) { 
 			throw new IllegalArgumentException("Season already has an ID, and has been created"); 
 		}
@@ -217,7 +218,7 @@ public class MySQLDAO implements DAOInterface {
 		
 		try(
 				//Could open connection here to keep not open the whole time
-				PreparedStatement statement = conn.prepareStatement(SQL_SEASON_GET_ALL); 
+				PreparedStatement statement = conn.prepareStatement(SQL_CONFERENCE_GET_ALL); 
 				ResultSet resultSet = statement.executeQuery()
 				){
 			
@@ -252,23 +253,86 @@ public class MySQLDAO implements DAOInterface {
 		
 	}
 
-	public void addConference(Conference c) {
-		// TODO Auto-generated method stub
+	public void addConference(Conference c) throws SQLException {
+		if(c.getId() != null) { 
+			throw new IllegalArgumentException("Conference already has an ID, and has been created"); 
+		}
 		
+		Object[] values = {
+				c.getConferenceName()
+		};
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_CONFERENCE_INSERT, true, values);
+		){
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Creating conference failed");
+			}
+			
+			try(ResultSet generatedKeys = statement.getGeneratedKeys()) {
+				if(generatedKeys.next()) {
+					c.setId(generatedKeys.getInt(1));
+				} else {
+					throw new SQLException("No generated key returned"); 
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
-	public Conference getConference(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Conference getConference(int id) throws SQLException {
+		Conference c = null; 
+		
+		try(
+			PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_CONFERENCE_GET_BY_ID, false, id);
+			ResultSet resultSet = statement.executeQuery();
+		){			
+			if(resultSet.next()) {
+				c = mapConference(resultSet); 
+			}
+		} catch(SQLException e) {
+			throw e;
+		}
+		
+		return c; 
 	}
 
-	public ArrayList<Conference> getAllConferences() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Conference> getAllConferences() throws SQLException {
+		ArrayList<Conference> conferences = new ArrayList<Conference>();
+		
+		try(
+				PreparedStatement statement = conn.prepareStatement(SQL_CONFERENCE_GET_ALL); 
+				ResultSet resultSet = statement.executeQuery()
+				){
+			
+			while(resultSet.next()) {
+				conferences.add(mapConference(resultSet)); 
+			}
+			
+		} catch (SQLException e) {
+			throw e; // Just pass along for now
+		}
+		
+		return conferences;
 	}
 
-	public void deleteConference(int id) {
-		// TODO Auto-generated method stub
+	public void deleteConference(int id) throws SQLException {
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_CONFERENCE_DELETE, false, id);
+		){
+			int affectedRows = statement.executeUpdate();
+			
+			if(affectedRows == 0) {
+				throw new SQLException("Deleting Conference Failed, no rows affected"); 
+			} 
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 		
 	}
 

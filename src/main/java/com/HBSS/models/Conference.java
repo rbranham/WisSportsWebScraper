@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class Conference {
 	
-	private int id; 
+	private Integer id; 
 	private String conferenceName;
 	
 }

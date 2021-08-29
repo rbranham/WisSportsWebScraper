@@ -25,10 +25,10 @@ public interface DAOInterface {
 	public void updateSeason(Season s);
 	
 	//CRUD for a conference
-	public void addConference(Conference c);
-	public Conference getConference(int id); 
-	public ArrayList<Conference> getAllConferences();
-	public void deleteConference(int id); 
+	public void addConference(Conference c) throws SQLException;
+	public Conference getConference(int id) throws SQLException; 
+	public ArrayList<Conference> getAllConferences() throws SQLException;
+	public void deleteConference(int id) throws SQLException; 
 	
 	//CRUD for Teams
 	public void addTeam(Team t); 

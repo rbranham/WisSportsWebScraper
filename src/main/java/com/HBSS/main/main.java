@@ -10,8 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import com.HBSS.data.DAOInterface;
 import com.HBSS.data.DAOUtil;
 import com.HBSS.data.MySQLDAO;
-import com.HBSS.models.Season;
-import com.HBSS.models.TeamConferenceSeasonQuickStats;
+import com.HBSS.models.*;
 import com.HBSS.pages.*;
 
 public class main {
@@ -26,17 +25,32 @@ public class main {
 		Season s = new Season(); 
 		s.setSeasonString("2019-20");
 		
+		Conference c = new Conference(); 
+		c.setConferenceName("Indianhead2");
+		
 		
 		try {
 //			//db.addSeason(s);
 			//db.deleteSeason(2);
-			ArrayList<Season> seasons = db.getAllSeasons();
-			
-			for(Season se : seasons) {
-				System.out.println(se);
-			}
+//			ArrayList<Season> seasons = db.getAllSeasons();
+//			
+//			for(Season se : seasons) {
+//				System.out.println(se);
+//			}
 			
 //			System.out.println(db.getSeason(1)); 
+			
+			//Conference Manual prototype testing
+			//db.addConference(c);
+			//System.out.println(db.getConference(1));
+			
+			//db.deleteConference(2);
+			
+			//ArrayList<Conference> confs = db.getAllConferences();
+			
+			//confs.stream().forEach(System.out :: println);
+			db.getAllConferences().stream().forEach(System.out :: println);
+			
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
