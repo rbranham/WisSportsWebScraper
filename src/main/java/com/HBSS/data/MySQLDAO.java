@@ -190,9 +190,21 @@ public class MySQLDAO implements DAOInterface {
 		
 	}
 
-	public Season getSeason(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Season getSeason(int id) throws SQLException {
+		Season s = null; 
+		
+		try(
+			PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_SEASON_GET_BY_ID, false, id);
+			ResultSet resultSet = statement.executeQuery();
+		){			
+			if(resultSet.next()) {
+				s = mapSeason(resultSet); 
+			}
+		} catch(SQLException e) {
+			throw e;
+		}
+		
+		return s; 
 	}
 
 	public Season getSeason(String seasonString) {

@@ -28,7 +28,15 @@ public class main {
 		
 		
 		try {
-			db.addSeason(s);
+//			//db.addSeason(s);
+//			ArrayList<Season> seasons = db.getAllSeasons();
+//			
+//			for(Season se : seasons) {
+//				System.out.println(se);
+//			}
+			
+			System.out.println(db.getSeason(1)); 
+			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
