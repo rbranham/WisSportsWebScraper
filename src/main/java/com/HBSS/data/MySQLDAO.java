@@ -232,9 +232,19 @@ public class MySQLDAO implements DAOInterface {
 		return seasons;
 	}
 
-	public void deleteSeason(int id) {
-		// TODO Auto-generated method stub
-		
+	public void deleteSeason(int id) throws SQLException {
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_SEASON_DELETE, false, id);
+		){
+			int affectedRows = statement.executeUpdate();
+			
+			if(affectedRows == 0) {
+				throw new SQLException("Deleting Season Failed, no rows affected"); 
+			} 
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
 	public void updateSeason(Season s) {

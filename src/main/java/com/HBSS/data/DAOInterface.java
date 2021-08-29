@@ -21,7 +21,7 @@ public interface DAOInterface {
 	public Season getSeason(int id) throws SQLException;
 	public Season getSeason(String seasonString); 
 	public ArrayList<Season> getAllSeasons() throws SQLException; 
-	public void deleteSeason(int id); 
+	public void deleteSeason(int id) throws SQLException; 
 	public void updateSeason(Season s);
 	
 	//CRUD for a conference

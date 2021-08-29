@@ -29,13 +29,14 @@ public class main {
 		
 		try {
 //			//db.addSeason(s);
-//			ArrayList<Season> seasons = db.getAllSeasons();
-//			
-//			for(Season se : seasons) {
-//				System.out.println(se);
-//			}
+			//db.deleteSeason(2);
+			ArrayList<Season> seasons = db.getAllSeasons();
 			
-			System.out.println(db.getSeason(1)); 
+			for(Season se : seasons) {
+				System.out.println(se);
+			}
+			
+//			System.out.println(db.getSeason(1)); 
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
