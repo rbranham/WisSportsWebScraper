@@ -31,11 +31,11 @@ public interface DAOInterface {
 	public void deleteConference(int id) throws SQLException; 
 	
 	//CRUD for Teams
-	public void addTeam(Team t); 
-	public Team getTeam(int id); 
+	public void addTeam(Team t) throws SQLException; 
+	public Team getTeam(int id) throws SQLException; 
 	public Team getTeam(String teamName, String town); //Assumes that name/town combination will always be unique. 
-	public ArrayList<Team> getAllTeams(); 
-	public void deleteTeam(int id); 
+	public ArrayList<Team> getAllTeams() throws SQLException; 
+	public void deleteTeam(int id) throws SQLException; 
 	
 	//CRUD for ConferenceSeasonStats entry
 	public void addTeamRecord(TeamConferenceSeasonQuickStats stats);

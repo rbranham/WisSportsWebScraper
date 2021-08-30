@@ -49,8 +49,19 @@ public class main {
 			//ArrayList<Conference> confs = db.getAllConferences();
 			
 			//confs.stream().forEach(System.out :: println);
-			db.getAllConferences().stream().forEach(System.out :: println);
+			//db.getAllConferences().stream().forEach(System.out :: println);
 			
+			
+		//Team manual test
+//			Team t = new Team();
+//			t.setTeamName("South Shore");
+//			t.setTown("Port Wing");
+//			
+//			db.addTeam(t);
+			//System.out.println(db.getTeam(1)); 
+			//db.deleteTeam(2);
+			
+			//db.getAllTeams().stream().forEach(System.out :: println);
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

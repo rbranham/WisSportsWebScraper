@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class Team {
 
-	private int id; 
+	private Integer id; 
 	private String teamName; 
 	private String town;
 	

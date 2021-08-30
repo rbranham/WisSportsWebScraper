@@ -336,14 +336,53 @@ public class MySQLDAO implements DAOInterface {
 		
 	}
 
-	public void addTeam(Team t) {
-		// TODO Auto-generated method stub
+	public void addTeam(Team t) throws SQLException {
+		if(t.getId() != null) { 
+			throw new IllegalArgumentException("Team already has an ID, and has been created"); 
+		}
 		
+		Object[] values = {
+				t.getTeamName(),
+				t.getTown()
+		};
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_TEAM_INSERT, true, values);
+		){
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Creating team failed");
+			}
+			
+			try(ResultSet generatedKeys = statement.getGeneratedKeys()) {
+				if(generatedKeys.next()) {
+					t.setId(generatedKeys.getInt(1));
+				} else {
+					throw new SQLException("No generated key returned"); 
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
-	public Team getTeam(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Team getTeam(int id) throws SQLException {
+		Team t = null; 
+		
+		try(
+			PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_TEAM_GET_BY_ID, false, id);
+			ResultSet resultSet = statement.executeQuery();
+		){			
+			if(resultSet.next()) {
+				t = mapTeam(resultSet); 
+			}
+		} catch(SQLException e) {
+			throw e;
+		}
+		
+		return t; 
 	}
 
 	public Team getTeam(String teamName, String town) {
@@ -351,14 +390,38 @@ public class MySQLDAO implements DAOInterface {
 		return null;
 	}
 
-	public ArrayList<Team> getAllTeams() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Team> getAllTeams() throws SQLException {
+		ArrayList<Team> teams = new ArrayList<Team>();
+		
+		try(
+				PreparedStatement statement = conn.prepareStatement(SQL_TEAM_GET_ALL); 
+				ResultSet resultSet = statement.executeQuery()
+				){
+			
+			while(resultSet.next()) {
+				teams.add(mapTeam(resultSet)); 
+			}
+			
+		} catch (SQLException e) {
+			throw e; // Just pass along for now
+		}
+		
+		return teams;
 	}
 
-	public void deleteTeam(int id) {
-		// TODO Auto-generated method stub
-		
+	public void deleteTeam(int id) throws SQLException {
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_TEAM_DELETE, false, id);
+		){
+			int affectedRows = statement.executeUpdate();
+			
+			if(affectedRows == 0) {
+				throw new SQLException("Deleting Team Failed, no rows affected"); 
+			} 
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
 	public void addTeamRecord(TeamConferenceSeasonQuickStats stats) {
