@@ -78,7 +78,7 @@ public final class DAOUtil {
     }
     
     /**
-     * Generates a select sql query for a table, by ID
+     * Generates a select sql query for a table, by ID or any single column
      * @param tableString
      * @param idColumnString
      * @return String Select Query for an entry with an id in a table
@@ -109,7 +109,7 @@ public final class DAOUtil {
     }
     
     /**
-     * Generates an insert string for a list of column names
+     * Generates an insert string for a list of column names and table
      * @param tableString
      * @param columnNames
      * @return

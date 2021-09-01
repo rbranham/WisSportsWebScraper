@@ -11,7 +11,7 @@ import com.HBSS.models.*;
  * Provides a contract for {@link Team}, {@link Conference}, {@link Season}, 
  * and {@link TeamConferenceSeasonQuickStats} data model classes. 
  *  
- * @author RogerB
+ * @author Roger branham
  *
  */
 public interface DAOInterface {

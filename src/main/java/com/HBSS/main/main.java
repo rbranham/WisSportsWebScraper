@@ -61,7 +61,7 @@ public class main {
 			//System.out.println(db.getTeam(1)); 
 			//db.deleteTeam(2);
 			
-			//db.getAllTeams().stream().forEach(System.out :: println);
+			db.getAllTeams().stream().forEach(System.out :: println);
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

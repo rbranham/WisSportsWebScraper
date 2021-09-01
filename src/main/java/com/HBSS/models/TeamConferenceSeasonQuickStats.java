@@ -3,6 +3,12 @@ package com.HBSS.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Data class to hold the record stats for a team in a given year. 
+ * 
+ * @author Roger Branham
+ *
+ */
 @Getter @Setter 
 public class TeamConferenceSeasonQuickStats {
 	
