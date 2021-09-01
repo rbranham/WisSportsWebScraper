@@ -2,6 +2,13 @@ package com.HBSS.pages;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Super class for every page, 
+ * defines constructor and driver requirment for every page. 
+ * 
+ * @author Roger Branham
+ *
+ */
 public class PageSuper {
 
 protected WebDriver driver;
