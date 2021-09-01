@@ -93,14 +93,16 @@ public class ConferencePage extends PageSuper {
 			
 			List<WebElement> e = i.findElements(By.xpath(".//td"));
 
-			tableContents.add(new TeamConferenceSeasonQuickStats(
-						e.get(0).getText(), // Name
-						Integer.parseInt(e.get(2).getText()), 
-						Integer.parseInt(e.get(3).getText()),
-						e.get(4).getText(),
-						e.get(5).getText(), 							//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-						season											//TODO: Quick Hack change column number depending on season string, Or Find column position dynamically from header row. 
-					));
+			//TODO: Old constructor was depreciated. 
+			//TODO: Need utility class to convert string to id for team. 
+//			tableContents.add(new TeamConferenceSeasonQuickStats(
+//						e.get(0).getText(), // Name
+//						Integer.parseInt(e.get(2).getText()), 
+//						Integer.parseInt(e.get(3).getText()),
+//						e.get(4).getText(),
+//						e.get(5).getText(), 							//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+//						season											//TODO: Quick Hack change column number depending on season string, Or Find column position dynamically from header row. 
+//					));
 			
 		}
 		
