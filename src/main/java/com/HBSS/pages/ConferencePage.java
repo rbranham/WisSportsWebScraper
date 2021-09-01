@@ -3,6 +3,7 @@ package com.HBSS.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.HBSS.models.Season;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.PageSuper;
 
@@ -11,6 +12,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+/**
+ * This class provides functionality to interact with a conference webpage. 
+ * 
+ * @author Roger Branham
+ *
+ */
 public class ConferencePage extends PageSuper {
 	
 	final public static String[] yearString = new String[] {
@@ -39,20 +46,30 @@ public class ConferencePage extends PageSuper {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
 	
-	public ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>  getStatsForSeasonList(String[] seasonStrings, String currentPageSeason){
+	//Thought process on change: 
+	//pass in strings and then look up ids? or pass in season datamodel classes and require db lookup before running? 
+	//Probably best for decoupling to pass datamodel and keep db decoupled
+	/**
+	 * Provides functionality to read multiple seasons for a conference. 
+	 * 
+	 * @param seasons
+	 * @param currentPageSeason
+	 * @return 2d Array List, each row is a season, each season has a list of teams and their standings. 
+	 */
+	public ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>  getStatsForSeasonList(ArrayList<Season> seasons, Season currentPageSeason){
 		
 		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>();
 		
 		//Should check if current page matches one in the string array and delete it if so
-		masterList.add(readStatsTable(currentPageSeason));
+		masterList.add(readStatsTable(currentPageSeason.getId()));
 		
 		//Go through each season and get stats
-		for(String s: seasonStrings) {
+		for(Season s: seasons) {
 			
-			changeSeasonTo(s);
+			changeSeasonTo(s.getSeasonString());
 			
 			masterList.add(
-					readStatsTable(s)
+					readStatsTable(s.getId())
 					);
 			
 		}
@@ -82,8 +99,13 @@ public class ConferencePage extends PageSuper {
 		driver.findElement(seasonDropDown).click();
 	}
 	
-	//Read Table
-	public ArrayList<TeamConferenceSeasonQuickStats> readStatsTable(String season){
+	/**
+	 * While on a conference standings page, will read in the standings and return a list of standing data models
+	 * 
+	 * @param seasonId - Is passed through to for creating datamodel
+	 * @return ArrayList<TeamConferenceSeasonQuickStats>
+	 */
+	public ArrayList<TeamConferenceSeasonQuickStats> readStatsTable(int seasonId){
 		ArrayList<TeamConferenceSeasonQuickStats> tableContents = new ArrayList<TeamConferenceSeasonQuickStats>();
 		
 		List<WebElement> items = driver.findElement(statTable)
