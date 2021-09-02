@@ -146,44 +146,53 @@ public class ConferencePage extends PageSuper {
 	}
 	
 	/**
-	 * 
+	 * This function is a lookup function for matching a team name to a team id. 
+	 * will look up in cache first, then database. If not found in either will then 
+	 * create new team to add to database. 
 	 * @param teamName
 	 * @return teamId
 	 */
 	private int findMatchingTeamId(String teamName) {
 		
-		//Check cache
-		ArrayList<Team> teamsThatMatch = new ArrayList<Team>(
-				teamsCache.stream()
-				.filter( t -> (t.getTeamName().equals(teamName)))
-				.collect(Collectors.toList())
-				);
+		//Wish we could decouple needing database, but can't think of way to. 
 		
-		if(teamsThatMatch.size() >= 2) {
-			System.out.println("Multiple matches in cache!"); //Probably should throw error up here. 
-			return -1; //Could just return first one found for now??
-		}
-		else if(teamsThatMatch.size() == 1) { //Found in cache
-			return teamsThatMatch.get(0).getId();
-		}
+		try {  
+			//Check cache ---
+			ArrayList<Team> teamsThatMatch = new ArrayList<Team>(
+					teamsCache.stream()
+					.filter( t -> (t.getTeamName().equals(teamName)))
+					.collect(Collectors.toList())
+					);
+			
+			if(teamsThatMatch.size() >= 2) {
+				System.out.println("Multiple matches in cache!"); //Probably should throw error up here. 
+				return -1; //Could just return first one found for now??
+			}
+			else if(teamsThatMatch.size() == 1) { //Found in cache
+				return teamsThatMatch.get(0).getId();
+			}
 		
-		
-		try { //Wish we could decouple this, will pass in a db for now. 
-			//Check database
+				
+			//Check database ---
 			
 			
 			
-			//Create new and add to database. And Cache 
+			
+			//Create new and add to database. And Cache  ---
+			
 			Team team = new Team();
 			team.setTeamName(teamName); 
 			//Town??? //TODO: Maybe remove town as every team in state appears to have a different name. 
 			
 			db.addTeam(team); //This function by reference will update the id field
+			
+			
 			if(team.getId() != null) {
 				teamsCache.add(team); //Add to cache
 				return team.getId(); 
 			} else {
 				System.out.println("New team came back with null id");
+				return -1; //Could also throw error
 			}
 			
 		}

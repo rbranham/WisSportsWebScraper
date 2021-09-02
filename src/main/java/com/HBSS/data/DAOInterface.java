@@ -33,7 +33,7 @@ public interface DAOInterface {
 	//CRUD for Teams
 	public void addTeam(Team t) throws SQLException; 
 	public Team getTeam(int id) throws SQLException; 
-	public Team getTeam(String teamName, String town); //Assumes that name/town combination will always be unique. 
+	public Team getTeam(String teamName) throws SQLException;  
 	public ArrayList<Team> getAllTeams() throws SQLException; 
 	public void deleteTeam(int id) throws SQLException; 
 	

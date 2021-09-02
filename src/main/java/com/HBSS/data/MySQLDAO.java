@@ -83,6 +83,8 @@ public class MySQLDAO implements DAOInterface {
 			DAOUtil.generateSelectAllFromTable(TEAM_TABLE);  
 	final private String SQL_TEAM_GET_BY_ID =
 			DAOUtil.generateSelectFromTableById(TEAM_TABLE, TEAM_ID); 
+	final private String SQL_TEAM_GET_BY_NAME =
+			DAOUtil.generateSelectFromTableById(TEAM_TABLE, TEAM_NAME); 
 	final private String SQL_TEAM_DELETE =
 			DAOUtil.generateDeleteByOneColumn(TEAM_TABLE, TEAM_ID); 
 	final private String SQL_TEAM_INSERT =
@@ -385,9 +387,24 @@ public class MySQLDAO implements DAOInterface {
 		return t; 
 	}
 
-	public Team getTeam(String teamName, String town) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public Team getTeam(String teamName) throws SQLException {
+		Team t = null; 
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_TEAM_GET_BY_NAME, false, teamName);
+				ResultSet resultSet = statement.executeQuery();
+				){
+			
+			if(resultSet.next()) {
+				t = mapTeam(resultSet); 
+			}
+			
+		} catch(SQLException e) {
+			throw e;
+		}
+		
+		return t;
 	}
 
 	public ArrayList<Team> getAllTeams() throws SQLException {

@@ -52,17 +52,17 @@ public class main {
 			
 			
 		//Team manual test
-//			Team t = new Team();
-//			t.setTeamName("South Shore");
-//			t.setTown("Port Wing");
-//			
-//			db.addTeam(t);
-			//System.out.println(db.getTeam(1)); 
+			//Team t = new Team();
+			//t.setTeamName("Bayfield");
+			//t.setTown("Port Wing");
+			
+			//db.addTeam(t);
+			System.out.println(db.getTeam("Bayfield")); 
 			//db.deleteTeam(2);
 			
 			//db.getAllTeams().stream().forEach(System.out :: println);
 			
-			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
+			//ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
