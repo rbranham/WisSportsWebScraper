@@ -11,10 +11,13 @@ import org.openqa.selenium.WebDriver;
  */
 public class PageSuper {
 
-protected WebDriver driver;
+	protected WebDriver driver;
 	
 	public PageSuper(WebDriver driver) {
 		this.driver = driver;
 	}
 	
+	public WebDriver getDriver() {
+		return driver; 
+	}
 }

@@ -25,7 +25,7 @@ public class main {
 		
 		
 		Season s = new Season(); 
-		s.setSeasonString("2020-21");
+		s.setSeasonString("2018-19");
 		
 //		Conference c = new Conference(); 
 //		c.setConferenceName("Indianhead2");
@@ -98,8 +98,11 @@ public class main {
 		
 	}
 	
-	private static void mainWebscrapeCode() {
+	
+	
+	private static ConferencePage setupConferencePageCode() {
 		
+		//Setup code
 		// Optional. If not specified, WebDriver searches the PATH for chromedriver.       
 		System.setProperty("webdriver.chrome.driver", DRIVER_PATH );  //C:\Users\Roger\Documents\Tools 
 		WebDriver driver = new ChromeDriver(); 	
@@ -111,16 +114,21 @@ public class main {
 				
 		customSleep();
 		
+		return indianHead;
+		
+	}
+	
+	private static void mainWebscrapeCode(ConferencePage conference, DAOInterface db) throws SQLException{
+			
+		
 		//indianHead.changeSeasonTo("2019-20");
 		//TODO: Need season list instead
 		
-		ArrayList<Season> seasons = new ArrayList<Season>(); 
+		ArrayList<Season> seasons = db.getAllSeasons(); 
 		
-		
-		//ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
-		
-		customSleep();
-		
+		Season startingSeason = seasons.remove(0); 
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conference.getStatsForSeasonList(seasons, startingSeason);
+				
 //		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
 //			
 //			for(TeamConferenceSeasonQuickStats q : seasonList) {
