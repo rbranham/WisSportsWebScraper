@@ -32,10 +32,10 @@ public class main {
 		
 		
 		try {
-			db.addSeason(s);
+			//db.addSeason(s);
 			//db.deleteSeason(2);
 			
-			db.getAllSeasons().stream().forEach(System.out::println);
+			//db.getAllSeasons().stream().forEach(System.out::println);
 			
 //			System.out.println(db.getSeason(1)); 
 			
@@ -62,6 +62,8 @@ public class main {
 			
 			//db.getAllTeams().stream().forEach(System.out :: println);
 			
+			ConferencePage indianhead = setupConferencePageCode(db.getConference(1)); //1 - Indianhead conference
+			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,36 +73,12 @@ public class main {
 		}
 		
 		//Web Scrapping manual testing
-//		mainCode(); 
-//		
-//		ArrayList<String> c = new ArrayList<String>();
-//		
-//		c.add("email");
-//		c.add("password");
-//		c.add("firstname");
-//		
-//		
-//		System.out.println(
-//				DAOUtil.generateInsert("User", c)
-//				);
-		
-		
-		//DAO Util manual testing
-//		ArrayList<String> c = new ArrayList<String>();
-//		
-//		c.add("email");
-//		
-//		
-//		System.out.println(
-//				DAOUtil.generateInsert("User", c)
-//				);
-		
+//		mainCode(); 	
 		
 	}
 	
 	
-	
-	private static ConferencePage setupConferencePageCode() {
+	private static ConferencePage setupConferencePageCode(Conference conference) {
 		
 		//Setup code
 		// Optional. If not specified, WebDriver searches the PATH for chromedriver.       
@@ -109,8 +87,8 @@ public class main {
 		
 		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
-		ConferencePage indianHead = new ConferencePage(driver);
-		indianHead.goTo(INDIANHEAD_STRING);
+		ConferencePage indianHead = new ConferencePage(driver, conference);
+		indianHead.goTo(INDIANHEAD_STRING); //TODO: This string should probably be in conference database??
 				
 		customSleep();
 		
@@ -118,32 +96,29 @@ public class main {
 		
 	}
 	
-	private static void mainWebscrapeCode(ConferencePage conference, DAOInterface db) throws SQLException{
-			
-		
-		//indianHead.changeSeasonTo("2019-20");
-		//TODO: Need season list instead
+	private static void scrapeStatsForConference(ConferencePage conference, DAOInterface db) throws SQLException{
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
 		
 		Season startingSeason = seasons.remove(0); 
 		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conference.getStatsForSeasonList(seasons, startingSeason);
 				
-//		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
-//			
-//			for(TeamConferenceSeasonQuickStats q : seasonList) {
-//				System.out.println(q);
-//			}
-//			
-//		}
-		
-//		ArrayList<TeamSeasonQuickStats> temp = indianHead.readStatsTable();
-//		
-//		for(TeamSeasonQuickStats q : temp) {
-//			System.out.println(q);
-//		}
+		displayStats(temp);
 		
 	}
+	
+	private static void displayStats(ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp) {
+		
+		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
+		
+			for(TeamConferenceSeasonQuickStats q : seasonList) {
+				System.out.println(q);
+			}
+		
+		}
+		
+	}
+	
 	
 	private static void customSleep() {
 		try {

@@ -3,6 +3,7 @@ package com.HBSS.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.HBSS.models.Conference;
 import com.HBSS.models.Season;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.PageSuper;
@@ -36,9 +37,11 @@ public class ConferencePage extends PageSuper {
 	final private By seasonCallout = By.id("megaDropDown-season-callout");
 	final private By statTable = By.className("statTable");
 	
+	private Conference conference;
 	
-	public ConferencePage(WebDriver driver) {
+	public ConferencePage(WebDriver driver, Conference conference) {
 		super(driver);
+		this.conference = conference;
 	}
 	
 	//Conference value is actually for each season for each conference. But only need to get onto one page and then can navigate to each season through clicks on dropdown
@@ -46,9 +49,6 @@ public class ConferencePage extends PageSuper {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
 	
-	//Thought process on change: 
-	//pass in strings and then look up ids? or pass in season datamodel classes and require db lookup before running? 
-	//Probably best for decoupling to pass datamodel and keep db decoupled
 	/**
 	 * Provides functionality to read multiple seasons for a conference. 
 	 * 
