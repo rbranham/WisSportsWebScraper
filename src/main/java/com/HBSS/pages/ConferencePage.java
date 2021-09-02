@@ -21,12 +21,6 @@ import org.openqa.selenium.support.ui.Select;
  */
 public class ConferencePage extends PageSuper {
 	
-	final public static String[] yearString = new String[] {
-		"2019-20",
-		"2018-19",
-		"2017-18"
-	};
-	
 	//Constants
 	final private String BASE_URL = "https://www.wissports.net"; //This value could be refactored into wissports superclass
 	final private String CONFERENCE_PAGE_POINT = "/page/show";
@@ -45,6 +39,12 @@ public class ConferencePage extends PageSuper {
 	}
 	
 	//Conference value is actually for each season for each conference. But only need to get onto one page and then can navigate to each season through clicks on dropdown
+	/**
+	 * Goes to webpage at endpoint specified by string.
+	 * Will be {@value BASE_URL} + {@value CONFERENCE_PAGE_POINT} + parameter conferenceValue
+	 * 
+	 * @param conferenceValue
+	 */
 	public void goTo(String conferenceValue) {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
@@ -78,7 +78,10 @@ public class ConferencePage extends PageSuper {
 		
 	}
 	
-	//Change Season
+	/**
+	 * While one a conference page, this function will switch pages to the year that matches parameter seasonText
+	 * @param seasonText
+	 */
 	public void changeSeasonTo(String seasonText) {
 		
 		openSeasonCallout();
@@ -94,7 +97,7 @@ public class ConferencePage extends PageSuper {
 		
 	}
 	
-	//Open season dropdown
+	/** This function opens the season switching call out on a conference page*/
 	private void openSeasonCallout() {
 		driver.findElement(seasonDropDown).click();
 	}
