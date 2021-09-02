@@ -115,16 +115,15 @@ public class ConferencePage extends PageSuper {
 			
 			List<WebElement> e = i.findElements(By.xpath(".//td"));
 
-			//TODO: Old constructor was depreciated. 
-			//TODO: Need utility class to convert string to id for team. 
-//			tableContents.add(new TeamConferenceSeasonQuickStats(
-//						e.get(0).getText(), // Name
-//						Integer.parseInt(e.get(2).getText()), 
-//						Integer.parseInt(e.get(3).getText()),
-//						e.get(4).getText(),
-//						e.get(5).getText(), 							//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-//						season											//TODO: Quick Hack change column number depending on season string, Or Find column position dynamically from header row. 
-//					));
+			//-- Construct a stat line --------------------
+			TeamConferenceSeasonQuickStats temp = new TeamConferenceSeasonQuickStats();
+			temp.setSeasonId(seasonId); 						//private int seasonId; 
+			temp.setConferenceId(conference.getId());			//private int conferenceId; 
+																//private int teamId;  		//TODO: need to use text to find team id
+			temp.setWins(Integer.parseInt(e.get(2).getText()));	//private int wins;
+			temp.setWins(Integer.parseInt(e.get(3).getText()));	//private int losses; 
+			temp.setStreak(e.get(4).getText());					//private String streak; 	//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+			temp.setOverall(e.get(5).getText());				//private String overall;	//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution		
 			
 		}
 		
