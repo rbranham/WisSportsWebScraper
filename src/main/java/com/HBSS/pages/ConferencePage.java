@@ -2,9 +2,11 @@ package com.HBSS.pages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.HBSS.models.Conference;
 import com.HBSS.models.Season;
+import com.HBSS.models.Team;
 import com.HBSS.models.TeamConferenceSeasonQuickStats;
 import com.HBSS.pages.PageSuper;
 
@@ -32,11 +34,14 @@ public class ConferencePage extends PageSuper {
 	final private By statTable = By.className("statTable");
 	
 	private Conference conference;
+	private ArrayList<Team> teamsCache;
 	
 	public ConferencePage(WebDriver driver, Conference conference) {
 		super(driver);
 		this.conference = conference;
+		teamsCache = new ArrayList<Team>(); 
 	}
+	
 	
 	//Conference value is actually for each season for each conference. But only need to get onto one page and then can navigate to each season through clicks on dropdown
 	/**
@@ -48,6 +53,7 @@ public class ConferencePage extends PageSuper {
 	public void goTo(String conferenceValue) {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}
+	
 	
 	/**
 	 * Provides functionality to read multiple seasons for a conference. 
@@ -78,6 +84,7 @@ public class ConferencePage extends PageSuper {
 		
 	}
 	
+	
 	/**
 	 * While one a conference page, this function will switch pages to the year that matches parameter seasonText
 	 * @param seasonText
@@ -97,10 +104,12 @@ public class ConferencePage extends PageSuper {
 		
 	}
 	
+	
 	/** This function opens the season switching call out on a conference page*/
 	private void openSeasonCallout() {
 		driver.findElement(seasonDropDown).click();
 	}
+	
 	
 	/**
 	 * While on a conference standings page, will read in the standings and return a list of standing data models
@@ -133,4 +142,42 @@ public class ConferencePage extends PageSuper {
 		return tableContents;
 	}
 	
+	/**
+	 * 
+	 * @param teamName
+	 * @return teamId
+	 */
+	private int findMatchingTeamId(String teamName) {
+		
+		//Check cache
+		ArrayList<Team> teamsThatMatch = new ArrayList<Team>(
+				teamsCache.stream()
+				.filter( t -> (t.getTeamName().equals(teamName)))
+				.collect(Collectors.toList())
+				);
+		
+		if(teamsThatMatch.size() >= 2) {
+			System.out.println("Multiple matches in cache!"); //Probably should throw error up here. 
+			return -1; //Could just return first one found for now??
+		}
+		else if(teamsThatMatch.size() == 1) { //Found in cache
+			return teamsThatMatch.get(0).getId();
+		}
+		
+		
+		try {
+			//Check database
+			
+			
+			
+			//Create new and add to database. 
+		}
+		catch (Exception e){
+			
+		}
+		
+		return -1;
+	}
+	
+    
 }
