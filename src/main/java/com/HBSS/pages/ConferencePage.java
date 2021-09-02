@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.HBSS.data.DAOInterface;
 import com.HBSS.models.Conference;
 import com.HBSS.models.Season;
 import com.HBSS.models.Team;
@@ -35,11 +36,13 @@ public class ConferencePage extends PageSuper {
 	
 	private Conference conference;
 	private ArrayList<Team> teamsCache;
+	private DAOInterface db; //Wish we could decouple this long term, but need for looking up team info 
 	
-	public ConferencePage(WebDriver driver, Conference conference) {
+	public ConferencePage(WebDriver driver, Conference conference, DAOInterface db) {
 		super(driver);
 		this.conference = conference;
-		teamsCache = new ArrayList<Team>(); 
+		this.teamsCache = new ArrayList<Team>(); //Initialize Team Cache
+		this.db = db;
 	}
 	
 	
@@ -165,12 +168,14 @@ public class ConferencePage extends PageSuper {
 		}
 		
 		
-		try {
+		try { //Wish we could decouple this, will pass in a db for now. 
 			//Check database
 			
 			
 			
-			//Create new and add to database. 
+			//Create new and add to database. And Cache 
+			
+			
 		}
 		catch (Exception e){
 			

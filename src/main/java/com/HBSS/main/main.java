@@ -62,7 +62,7 @@ public class main {
 			
 			//db.getAllTeams().stream().forEach(System.out :: println);
 			
-			ConferencePage indianhead = setupConferencePageCode(db.getConference(1)); //1 - Indianhead conference
+			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +78,7 @@ public class main {
 	}
 	
 	
-	private static ConferencePage setupConferencePageCode(Conference conference) {
+	private static ConferencePage setupConferencePageCode(Conference conference, DAOInterface db) {
 		
 		//Setup code
 		// Optional. If not specified, WebDriver searches the PATH for chromedriver.       
@@ -87,7 +87,7 @@ public class main {
 		
 		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
-		ConferencePage indianHead = new ConferencePage(driver, conference);
+		ConferencePage indianHead = new ConferencePage(driver, conference, db);
 		indianHead.goTo(INDIANHEAD_STRING); //TODO: This string should probably be in conference database??
 				
 		customSleep();
