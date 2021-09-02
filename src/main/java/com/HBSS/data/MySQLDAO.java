@@ -218,7 +218,7 @@ public class MySQLDAO implements DAOInterface {
 		
 		try(
 				//Could open connection here to keep not open the whole time
-				PreparedStatement statement = conn.prepareStatement(SQL_CONFERENCE_GET_ALL); 
+				PreparedStatement statement = conn.prepareStatement(SQL_SEASON_GET_ALL); 
 				ResultSet resultSet = statement.executeQuery()
 				){
 			

@@ -41,7 +41,7 @@ public class ConferencePage extends PageSuper {
 		super(driver);
 	}
 	
-	//Conference value is actually for each season for each conference. But only need to get onto one page and then can naviagate to each season through clicks on dropdown
+	//Conference value is actually for each season for each conference. But only need to get onto one page and then can navigate to each season through clicks on dropdown
 	public void goTo(String conferenceValue) {
 		driver.get(FULL_URL + "/" + conferenceValue);    
 	}

@@ -22,21 +22,20 @@ public class main {
 		
 		//DAO manual testing
 		DAOInterface db = MySQLDAO.getInstance();
-		Season s = new Season(); 
-		s.setSeasonString("2019-20");
 		
-		Conference c = new Conference(); 
-		c.setConferenceName("Indianhead2");
+		
+		Season s = new Season(); 
+		s.setSeasonString("2020-21");
+		
+//		Conference c = new Conference(); 
+//		c.setConferenceName("Indianhead2");
 		
 		
 		try {
-//			//db.addSeason(s);
+			db.addSeason(s);
 			//db.deleteSeason(2);
-//			ArrayList<Season> seasons = db.getAllSeasons();
-//			
-//			for(Season se : seasons) {
-//				System.out.println(se);
-//			}
+			
+			db.getAllSeasons().stream().forEach(System.out::println);
 			
 //			System.out.println(db.getSeason(1)); 
 			
@@ -61,7 +60,7 @@ public class main {
 			//System.out.println(db.getTeam(1)); 
 			//db.deleteTeam(2);
 			
-			db.getAllTeams().stream().forEach(System.out :: println);
+			//db.getAllTeams().stream().forEach(System.out :: println);
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
@@ -99,7 +98,7 @@ public class main {
 		
 	}
 	
-	private static void mainCode() {
+	private static void mainWebscrapeCode() {
 		
 		// Optional. If not specified, WebDriver searches the PATH for chromedriver.       
 		System.setProperty("webdriver.chrome.driver", DRIVER_PATH );  //C:\Users\Roger\Documents\Tools 
@@ -113,17 +112,22 @@ public class main {
 		customSleep();
 		
 		//indianHead.changeSeasonTo("2019-20");
-		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
+		//TODO: Need season list instead
+		
+		ArrayList<Season> seasons = new ArrayList<Season>(); 
+		
+		
+		//ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = indianHead.getStatsForSeasonList(ConferencePage.yearString, "2020-21");
 		
 		customSleep();
 		
-		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
-			
-			for(TeamConferenceSeasonQuickStats q : seasonList) {
-				System.out.println(q);
-			}
-			
-		}
+//		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
+//			
+//			for(TeamConferenceSeasonQuickStats q : seasonList) {
+//				System.out.println(q);
+//			}
+//			
+//		}
 		
 //		ArrayList<TeamSeasonQuickStats> temp = indianHead.readStatsTable();
 //		
