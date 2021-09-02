@@ -174,7 +174,17 @@ public class ConferencePage extends PageSuper {
 			
 			
 			//Create new and add to database. And Cache 
+			Team team = new Team();
+			team.setTeamName(teamName); 
+			//Town??? //TODO: Maybe remove town as every team in state appears to have a different name. 
 			
+			db.addTeam(team); //This function by reference will update the id field
+			if(team.getId() != null) {
+				teamsCache.add(team); //Add to cache
+				return team.getId(); 
+			} else {
+				System.out.println("New team came back with null id");
+			}
 			
 		}
 		catch (Exception e){
