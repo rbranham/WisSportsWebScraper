@@ -57,7 +57,15 @@ public class main {
 			//t.setTown("Port Wing");
 			
 			//db.addTeam(t);
-			System.out.println(db.getTeam("Bayfield")); 
+			Team t = db.getTeam("Mellen");
+			
+			if(t == null) {
+				System.out.println("not found");
+			} else {
+				System.out.println("Not null for some reason? ");
+			}
+			
+			//System.out.println(db.getTeam("Mellen")); 
 			//db.deleteTeam(2);
 			
 			//db.getAllTeams().stream().forEach(System.out :: println);

@@ -132,18 +132,19 @@ public class ConferencePage extends PageSuper {
 
 			//-- Construct a stat line --------------------
 			TeamConferenceSeasonQuickStats temp = new TeamConferenceSeasonQuickStats();
-			temp.setSeasonId(seasonId); 						//private int seasonId; 
-			temp.setConferenceId(conference.getId());			//private int conferenceId; 
-																//private int teamId;  		//TODO: need to use text to find team id
-			temp.setWins(Integer.parseInt(e.get(2).getText()));	//private int wins;
-			temp.setWins(Integer.parseInt(e.get(3).getText()));	//private int losses; 
-			temp.setStreak(e.get(4).getText());					//private String streak; 	//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-			temp.setOverall(e.get(5).getText());				//private String overall;	//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution		
+			temp.setSeasonId(seasonId); 							//seasonId; 
+			temp.setConferenceId(conference.getId());				//conferenceId; 
+			temp.setTeamId(findMatchingTeamId(e.get(1).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
+			temp.setWins(Integer.parseInt(e.get(2).getText()));		//wins;
+			temp.setWins(Integer.parseInt(e.get(3).getText()));		//losses; 
+			temp.setStreak(e.get(4).getText());						//streak; 	//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+			temp.setOverall(e.get(5).getText());					//overall;	//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution		
 			
 		}
 		
 		return tableContents;
 	}
+	
 	
 	/**
 	 * This function is a lookup function for matching a team name to a team id. 
@@ -174,24 +175,28 @@ public class ConferencePage extends PageSuper {
 		
 				
 			//Check database ---
+			Team team = db.getTeam(teamName);
 			
 			
+			//Create new and add to database if not found. 
+			if(team == null) {
+				
+				team = new Team();
+				team.setTeamName(teamName); 
+				//Town - Kept null, since info not on page, for completness could do  an extended 
+				// lookup here. Or can do mass fix script later. 
+				
+				db.addTeam(team); //This function by reference will update the id field
+				
+			}
 			
 			
-			//Create new and add to database. And Cache  ---
-			
-			Team team = new Team();
-			team.setTeamName(teamName); 
-			//Town??? //TODO: Maybe remove town as every team in state appears to have a different name. 
-			
-			db.addTeam(team); //This function by reference will update the id field
-			
-			
-			if(team.getId() != null) {
-				teamsCache.add(team); //Add to cache
+			// Add to cache and return ---
+			if(team.getId() != null) { //double checks nothing went wrong
+				teamsCache.add(team); 
 				return team.getId(); 
 			} else {
-				System.out.println("New team came back with null id");
+				System.out.println("Team came back with null id");
 				return -1; //Could also throw error
 			}
 			
