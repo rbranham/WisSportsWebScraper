@@ -78,7 +78,6 @@ public class ConferencePage extends PageSuper {
 		}
 		
 		//Go through each season and get stats
-		System.out.println("Beginning main read loop");
 		for(Season s: seasons) {
 			
 			changeSeasonTo(s.getSeasonString());
@@ -99,7 +98,6 @@ public class ConferencePage extends PageSuper {
 	 * @param seasonText
 	 */
 	public void changeSeasonTo(String seasonText) {
-		System.out.println("Opening season: " + seasonText);
 		
 		openSeasonCallout();
 		
@@ -128,7 +126,6 @@ public class ConferencePage extends PageSuper {
 	 * @return ArrayList<TeamConferenceSeasonQuickStats>
 	 */
 	public ArrayList<TeamConferenceSeasonQuickStats> readStatsTable(int seasonId){
-		System.out.println("Attempting to read stats table for season ID: " + seasonId);
 		
 		ArrayList<TeamConferenceSeasonQuickStats> tableContents = new ArrayList<TeamConferenceSeasonQuickStats>();
 		
@@ -136,13 +133,8 @@ public class ConferencePage extends PageSuper {
 				.findElements(By.xpath(".//tbody/tr"));
 		
 		for(WebElement i : items) {
-			System.out.println("Reading from row with: " + i.getText());
 			
 			List<WebElement> e = i.findElements(By.xpath(".//td"));
-			
-			//System.out.println("Split row up into: " + e.size() + " columns");
-			
-			//e.stream().forEach(c -> System.out.println(c.getText()));
 			
 			//-- Construct a stat line --------------------
 			TeamConferenceSeasonQuickStats temp = new TeamConferenceSeasonQuickStats();
@@ -153,15 +145,10 @@ public class ConferencePage extends PageSuper {
 			temp.setLosses(Integer.parseInt(e.get(3).getText()));	//losses; 	
 			temp.setOverall(findOverall(e));						//overall;		
 			
-			System.out.println("----Stat created --------");
-			System.out.println(temp);
-			System.out.println("----------");
-			
 			tableContents.add(temp);
 			
 		}
 		
-		System.out.println("Returning stats for seasonId: " + seasonId);
 		return tableContents;
 	}
 	
@@ -183,7 +170,6 @@ public class ConferencePage extends PageSuper {
 	 * @return teamId
 	 */
 	private int findMatchingTeamId(String teamName) {
-		System.out.println("Attempting to find team: " + teamName);
 		
 		//Wish we could decouple needing database, but can't think of way to. 
 		
