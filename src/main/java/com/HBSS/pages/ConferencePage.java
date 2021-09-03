@@ -150,7 +150,7 @@ public class ConferencePage extends PageSuper {
 			temp.setConferenceId(conference.getId());				//conferenceId; 
 			temp.setTeamId(findMatchingTeamId(e.get(0).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
 			temp.setWins(Integer.parseInt(e.get(2).getText()));		//wins;
-			temp.setLosses(Integer.parseInt(e.get(3).getText()));		//losses; 	
+			temp.setLosses(Integer.parseInt(e.get(3).getText()));	//losses; 	
 			temp.setOverall(findOverall(e));						//overall;		
 			
 			System.out.println("----Stat created --------");
@@ -172,8 +172,7 @@ public class ConferencePage extends PageSuper {
 	 * @return overall string for row
 	 */
 	private String findOverall(List<WebElement> e) {
-		//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-		return e.get(5).getText();
+		return e.get(e.size() - 1).getText(); //Overall is always the last column
 	}
 	
 	/**
