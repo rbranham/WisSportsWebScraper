@@ -13,6 +13,8 @@ import com.HBSS.data.MySQLDAO;
 import com.HBSS.models.*;
 import com.HBSS.pages.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class main {
 
 	private final static String DRIVER_PATH = "/Users/Roger/Documents/Tools/chromedriver.exe";
@@ -21,44 +23,33 @@ public class main {
 	public static void main(String[] args) {
 		
 		//DAO manual testing
-		DAOInterface db = MySQLDAO.getInstance();
-		
-		
-//		Season s = new Season(); 
-//		s.setSeasonString("2018-19");
-		
-//		Conference c = new Conference(); 
-//		c.setConferenceName("Indianhead2");
-		
+		DAOInterface db = MySQLDAO.getInstance();	
 		
 		try {
 			
-			TeamConferenceSeasonQuickStats t = new TeamConferenceSeasonQuickStats();
-			t.setConferenceId(1);
-			t.setSeasonId(1);
-			t.setTeamId(7);
-			t.setWins(14);
-			t.setLosses(2);
-			t.setOverall("19-6-0");
+
+//			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
+//			ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> bigList = scrapeStatsForConference(indianhead, db); //Will read stats 
+//			writeStats(bigList, db); //Write into database
 			
-			db.addTeamRecord(t);
-			
-			ArrayList<TeamConferenceSeasonQuickStats> list = db.getAllForConference(1);
-			list.stream().forEach(System.out::println);
-			
-			//ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
-			//scrapeStatsForConference(indianhead, db); //Will read stats and print out results. 
-			
-//			ArrayList<TeamConferenceSeasonQuickStats> stats = indianhead.readStatsTable(2);
-//			
 //			System.out.println("Trying to print stats...");
 //			stats.stream().forEach(System.out::println);
+			
+			
+			//Load stats
+			ArrayList<TeamConferenceSeasonQuickStats> list = db.getAllForConference(1);
+			//list.stream().forEach(System.out::println);
+					
+			System.out.println(createJson(list));
+			
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -96,7 +87,7 @@ public class main {
 	}
 	
 	/** Runs code to read the stats */
-	private static void scrapeStatsForConference(ConferencePage conferencePage, DAOInterface db) throws SQLException{
+	private static ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> scrapeStatsForConference(ConferencePage conferencePage, DAOInterface db) throws SQLException{
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
 		System.out.println("Starting read, passing in seasons: ");
@@ -108,6 +99,7 @@ public class main {
 		
 		System.out.println("Scrape finished, displaying results: ");
 		displayStats(temp);
+		return temp;
 		
 	}
 	
@@ -126,6 +118,42 @@ public class main {
 		
 	}
 	
+	/** Write the stats to database */
+	private static void writeStats(ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp, DAOInterface db) {
+		
+		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
+		
+			for(TeamConferenceSeasonQuickStats q : seasonList) {
+
+				try {
+					db.addTeamRecord(q);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		
+		}
+		
+		System.out.println("Done Inputing results");
+		
+	}
+	
+	/** Converts stats list to json string */
+	private static String createJson(ArrayList<TeamConferenceSeasonQuickStats> list) {
+		try {
+			//JSON conversion test
+			ObjectMapper mapper = new ObjectMapper();
+			
+			String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+			
+			return jsonString;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	private static void customSleep() {
 		try {
@@ -138,6 +166,13 @@ public class main {
 	}
 	
 	private static void miscDbCode() {
+		
+//		Season s = new Season(); 
+//		s.setSeasonString("2018-19");
+		
+//		Conference c = new Conference(); 
+//		c.setConferenceName("Indianhead2");
+		
 		
 		//db.addSeason(s);
 		//db.deleteSeason(2);
@@ -177,6 +212,18 @@ public class main {
 		//db.deleteTeam(2);
 		
 		//db.getAllTeams().stream().forEach(System.out :: println);
+		
+		
+//		TeamConferenceSeasonQuickStats t = new TeamConferenceSeasonQuickStats();
+//		t.setConferenceId(1);
+//		t.setSeasonId(1);
+//		t.setTeamId(7);
+//		t.setWins(14);
+//		t.setLosses(2);
+//		t.setOverall("19-6-0");
+		
+		//db.addTeamRecord(t);
+		
 		
 	}
 
