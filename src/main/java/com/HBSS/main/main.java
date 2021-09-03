@@ -24,53 +24,17 @@ public class main {
 		DAOInterface db = MySQLDAO.getInstance();
 		
 		
-		Season s = new Season(); 
-		s.setSeasonString("2018-19");
+//		Season s = new Season(); 
+//		s.setSeasonString("2018-19");
 		
 //		Conference c = new Conference(); 
 //		c.setConferenceName("Indianhead2");
 		
 		
 		try {
-			//db.addSeason(s);
-			//db.deleteSeason(2);
+						
+			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
 			
-			//db.getAllSeasons().stream().forEach(System.out::println);
-			
-//			System.out.println(db.getSeason(1)); 
-			
-			//Conference Manual prototype testing
-			//db.addConference(c);
-			//System.out.println(db.getConference(1));
-			
-			//db.deleteConference(2);
-			
-			//ArrayList<Conference> confs = db.getAllConferences();
-			
-			//confs.stream().forEach(System.out :: println);
-			//db.getAllConferences().stream().forEach(System.out :: println);
-			
-			
-		//Team manual test
-			//Team t = new Team();
-			//t.setTeamName("Bayfield");
-			//t.setTown("Port Wing");
-			
-			//db.addTeam(t);
-			Team t = db.getTeam("Mellen");
-			
-			if(t == null) {
-				System.out.println("not found");
-			} else {
-				System.out.println("Not null for some reason? ");
-			}
-			
-			//System.out.println(db.getTeam("Mellen")); 
-			//db.deleteTeam(2);
-			
-			//db.getAllTeams().stream().forEach(System.out :: println);
-			
-			//ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
@@ -85,36 +49,44 @@ public class main {
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param conference  Conference that we are checking
+	 * @param db
+	 * @return
+	 */
 	private static ConferencePage setupConferencePageCode(Conference conference, DAOInterface db) {
 		
-		//Setup code
-		// Optional. If not specified, WebDriver searches the PATH for chromedriver.       
+		//Initiate web driver
 		System.setProperty("webdriver.chrome.driver", DRIVER_PATH );  //C:\Users\Roger\Documents\Tools 
 		WebDriver driver = new ChromeDriver(); 	
 		
+		//Set waits/timeouts
 		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
+		//Prep conference page
 		ConferencePage indianHead = new ConferencePage(driver, conference, db);
 		indianHead.goTo(INDIANHEAD_STRING); //TODO: This string should probably be in conference database??
 				
-		customSleep();
+		//customSleep();
 		
 		return indianHead;
 		
 	}
 	
-	private static void scrapeStatsForConference(ConferencePage conference, DAOInterface db) throws SQLException{
+	/** Runs code to read the stats */
+	private static void scrapeStatsForConference(ConferencePage conferencePage, DAOInterface db) throws SQLException{
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
 		
-		Season startingSeason = seasons.remove(0); 
-		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conference.getStatsForSeasonList(seasons, startingSeason);
+		Season startingSeason = seasons.remove(0);  //TODO: Change this to not require a starting season
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conferencePage.getStatsForSeasonList(seasons, startingSeason);
 				
 		displayStats(temp);
 		
 	}
 	
+	/** Displays the stats */
 	private static void displayStats(ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp) {
 		
 		for(ArrayList<TeamConferenceSeasonQuickStats> seasonList : temp) {
@@ -138,6 +110,47 @@ public class main {
 		}  // Let the user actually see something! 
 	}
 	
-	
+	private static void miscDbCode() {
+		
+		//db.addSeason(s);
+		//db.deleteSeason(2);
+		
+		//db.getAllSeasons().stream().forEach(System.out::println);
+		
+//		System.out.println(db.getSeason(1)); 
+		
+
+		
+		//db.addConference(c);
+		//System.out.println(db.getConference(1));
+		
+		//db.deleteConference(2);
+		
+		//ArrayList<Conference> confs = db.getAllConferences();
+		
+		//confs.stream().forEach(System.out :: println);
+		//db.getAllConferences().stream().forEach(System.out :: println);
+		
+		
+	//Team manual test
+		//Team t = new Team();
+		//t.setTeamName("Bayfield");
+		//t.setTown("Port Wing");
+		
+		//db.addTeam(t);
+//		Team t = db.getTeam("Mellen");
+//		
+//		if(t == null) {
+//			System.out.println("not found");
+//		} else {
+//			System.out.println("Not null for some reason? ");
+//		}
+		
+		//System.out.println(db.getTeam("Mellen")); 
+		//db.deleteTeam(2);
+		
+		//db.getAllTeams().stream().forEach(System.out :: println);
+		
+	}
 
 }
