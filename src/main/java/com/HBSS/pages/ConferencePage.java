@@ -137,14 +137,35 @@ public class ConferencePage extends PageSuper {
 			temp.setTeamId(findMatchingTeamId(e.get(1).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
 			temp.setWins(Integer.parseInt(e.get(2).getText()));		//wins;
 			temp.setWins(Integer.parseInt(e.get(3).getText()));		//losses; 
-			temp.setStreak(e.get(4).getText());						//streak; 	//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-			temp.setOverall(e.get(5).getText());					//overall;	//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution		
+			temp.setStreak(findStreak(e));							//streak; 	
+			temp.setOverall(findOverall(e));						//overall;		
 			
 		}
 		
 		return tableContents;
 	}
 	
+	/**
+	 * Helper function to find the streak value in a row
+	 * @param e is WebElement that is a row in the table
+	 * @return streak string for row
+	 */
+	private String findStreak(List<WebElement> e) {
+		//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution	
+		//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+		return e.get(4).getText(); 
+		
+	}
+	
+	/**
+	 * Helper function to find the overall record string in a row
+	 * @param e is WebElement that is a row in the table
+	 * @return overall string for row
+	 */
+	private String findOverall(List<WebElement> e) {
+		//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
+		return e.get(5).getText();
+	}
 	
 	/**
 	 * This function is a lookup function for matching a team name to a team id. 
@@ -202,7 +223,7 @@ public class ConferencePage extends PageSuper {
 			
 		}
 		catch (Exception e){
-			
+			e.printStackTrace();
 		}
 		
 		return -1;
