@@ -34,7 +34,7 @@ public class main {
 		try {
 						
 			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
-			
+			scrapeStatsForConference(indianhead, db); //Will read stats and print out results. 
 			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
@@ -79,8 +79,8 @@ public class main {
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
 		
-		Season startingSeason = seasons.remove(0);  //TODO: Change this to not require a starting season
-		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conferencePage.getStatsForSeasonList(seasons, startingSeason);
+		//Season startingSeason = seasons.remove(0);  //TODO: Change this to not require a starting season
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conferencePage.getStatsForSeasonList(seasons); //, startingSeason
 				
 		displayStats(temp);
 		

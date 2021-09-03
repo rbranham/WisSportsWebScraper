@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * Super class for every page, 
- * defines constructor and driver requirment for every page. 
+ * defines constructor and driver requirement for every page. 
  * 
  * @author Roger Branham
  *

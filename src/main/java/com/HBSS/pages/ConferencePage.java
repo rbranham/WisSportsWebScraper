@@ -33,6 +33,7 @@ public class ConferencePage extends PageSuper {
 	final private By seasonDropDown = By.id("megaDropDown-season");
 	final private By seasonCallout = By.id("megaDropDown-season-callout");
 	final private By statTable = By.className("statTable");
+	final private By tableLabel = By.className("sportTableLabel");
 	
 	private Conference conference;
 	private ArrayList<Team> teamsCache;
@@ -65,12 +66,15 @@ public class ConferencePage extends PageSuper {
 	 * @param currentPageSeason
 	 * @return 2d Array List, each row is a season, each season has a list of teams and their standings. 
 	 */
-	public ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>  getStatsForSeasonList(ArrayList<Season> seasons, Season currentPageSeason){
+	public ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>  getStatsForSeasonList(ArrayList<Season> seasons){
 		
 		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>();
 		
-		//Should check if current page matches one in the string array and delete it if so
-		masterList.add(readStatsTable(currentPageSeason.getId()));
+		//Check if current page matches first season, if so read first
+		if( driver.findElement(tableLabel).getText().contains( seasons.get(0).getSeasonString()) ){ 
+			Season currentPageSeason = seasons.remove(0);
+			masterList.add(readStatsTable(currentPageSeason.getId()));
+		}
 		
 		//Go through each season and get stats
 		for(Season s: seasons) {
@@ -94,6 +98,7 @@ public class ConferencePage extends PageSuper {
 	 */
 	public void changeSeasonTo(String seasonText) {
 		
+		System.out.println("Opening season: " + seasonText);
 		openSeasonCallout();
 		
 		WebElement dropdown = driver.findElement(seasonCallout).findElement(By.xpath(".//div[2]/select"));
@@ -201,14 +206,14 @@ public class ConferencePage extends PageSuper {
 			
 			//Create new and add to database if not found. 
 			if(team == null) {
-				
+							
 				team = new Team();
 				team.setTeamName(teamName); 
-				//Town - Kept null, since info not on page, for completness could do  an extended 
+				//Town - Kept null, since info not on page, for completeness could do  an extended 
 				// lookup here. Or can do mass fix script later. 
 				
 				db.addTeam(team); //This function by reference will update the id field
-				
+				System.out.println("Created new team: " + teamName);
 			}
 			
 			
