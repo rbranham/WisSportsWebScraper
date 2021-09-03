@@ -18,7 +18,6 @@ public class TeamConferenceSeasonQuickStats {
 	private int teamId; 
 	private int wins;
 	private int losses; 
-	private String streak; 
 	private String overall;
 
 }

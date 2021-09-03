@@ -150,8 +150,7 @@ public class ConferencePage extends PageSuper {
 			temp.setConferenceId(conference.getId());				//conferenceId; 
 			temp.setTeamId(findMatchingTeamId(e.get(0).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
 			temp.setWins(Integer.parseInt(e.get(2).getText()));		//wins;
-			temp.setLosses(Integer.parseInt(e.get(3).getText()));		//losses; 
-			temp.setStreak(findStreak(e));							//streak; 	
+			temp.setLosses(Integer.parseInt(e.get(3).getText()));		//losses; 	
 			temp.setOverall(findOverall(e));						//overall;		
 			
 			System.out.println("----Stat created --------");
@@ -166,17 +165,6 @@ public class ConferencePage extends PageSuper {
 		return tableContents;
 	}
 	
-	/**
-	 * Helper function to find the streak value in a row
-	 * @param e is WebElement that is a row in the table
-	 * @return streak string for row
-	 */
-	private String findStreak(List<WebElement> e) {
-		//TODO: Solutions is to write methods to grab these values, can then implement dynamic solution	
-		//WARNING: For seasons before 18-19, there are more columns so this will not be correct.
-		return e.get(4).getText(); 
-		
-	}
 	
 	/**
 	 * Helper function to find the overall record string in a row
