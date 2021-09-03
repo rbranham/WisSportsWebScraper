@@ -38,8 +38,8 @@ public interface DAOInterface {
 	public void deleteTeam(int id) throws SQLException; 
 	
 	//CRUD for ConferenceSeasonStats entry
-	public void addTeamRecord(TeamConferenceSeasonQuickStats stats);
+	public void addTeamRecord(TeamConferenceSeasonQuickStats stats) throws SQLException;
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForSeason(int conferenceId, int seasonId);
-	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId);
-	
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId) throws SQLException;
+	public ArrayList<TeamConferenceSeasonQuickStats> getAllForConference(int conferenceId) throws SQLException; 
 }

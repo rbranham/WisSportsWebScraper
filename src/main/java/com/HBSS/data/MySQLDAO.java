@@ -52,7 +52,7 @@ public class MySQLDAO implements DAOInterface {
 	final private String STATS_SEAS_ID = "season_id";
 	final private String STATS_WINS = "wins";
 	final private String STATS_LOSSES = "losses"; 
-	final private String STATS_STREAK = "streak";
+	//final private String STATS_STREAK = "streak";
 	final private String STATS_OVERALL = "overall"; 
 	
 	
@@ -93,6 +93,8 @@ public class MySQLDAO implements DAOInterface {
 	
 	//This table is more complicated
 	
+
+	
 	//Get all by conference - Not in interface, but may be useful later. 
 	final private String SQL_STATS_GET_ALL_FOR_CONF = 
 			DAOUtil.generateSelectFromTableById(STATS_TABLE, STATS_CONF_ID);
@@ -116,7 +118,6 @@ public class MySQLDAO implements DAOInterface {
 					STATS_SEAS_ID,
 					STATS_WINS,
 					STATS_LOSSES,
-					STATS_STREAK,
 					STATS_OVERALL 
 					)));
 	
@@ -441,18 +442,66 @@ public class MySQLDAO implements DAOInterface {
 		}
 	}
 
-	public void addTeamRecord(TeamConferenceSeasonQuickStats stats) {
-		// TODO Auto-generated method stub
+	public void addTeamRecord(TeamConferenceSeasonQuickStats stats) throws SQLException {
 		
+		Object[] values = {
+				stats.getTeamId(),
+				stats.getConferenceId(),
+				stats.getSeasonId(),
+				stats.getWins(),
+				stats.getLosses(),
+				stats.getOverall()
+		};
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_STATS_INSERT, false, values);
+		){
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new SQLException("Creating team failed");
+			}
+			
+			//Shouldn't need any generated keys
+//			try(ResultSet generatedKeys = statement.getGeneratedKeys()) {
+//				if(generatedKeys.next()) {
+//					t.setId(generatedKeys.getInt(1));
+//				} else {
+//					throw new SQLException("No generated key returned"); 
+//				}
+//				
+//			}
+			
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 
+	@Override
+	public ArrayList<TeamConferenceSeasonQuickStats> getAllForConference(int conferenceId) throws SQLException {
+		ArrayList<TeamConferenceSeasonQuickStats> stats = new ArrayList<TeamConferenceSeasonQuickStats>();
+		
+		try(
+				PreparedStatement statement = DAOUtil.prepareStatement(conn, SQL_STATS_GET_ALL_FOR_CONF, false, conferenceId); 
+				ResultSet resultSet = statement.executeQuery()
+				){
+			
+			while(resultSet.next()) {
+				stats.add(mapStats(resultSet)); 
+			}
+			
+		} catch (SQLException e) {
+			throw e; // Just pass along for now
+		}
+		
+		return stats;
+	}
+	
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForSeason(int conferenceId, int seasonId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId) {
-		// TODO Auto-generated method stub
+	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId) throws SQLException {
 		return null;
 	}
 	
@@ -483,8 +532,15 @@ public class MySQLDAO implements DAOInterface {
 	
 	private TeamConferenceSeasonQuickStats mapStats(ResultSet rs) throws SQLException {
 		TeamConferenceSeasonQuickStats q = new TeamConferenceSeasonQuickStats(); 
-		//TODO: Update when model class is finished. 
+		q.setConferenceId(rs.getInt(STATS_CONF_ID));
+		q.setSeasonId(rs.getInt(STATS_SEAS_ID));
+		q.setTeamId(rs.getInt(STATS_TEAM_ID));
+		q.setWins(rs.getInt(STATS_WINS));
+		q.setLosses(rs.getInt(STATS_LOSSES));
+		q.setOverall(rs.getString(STATS_OVERALL));
 		return q; 
 	}
+
+
 	
 }

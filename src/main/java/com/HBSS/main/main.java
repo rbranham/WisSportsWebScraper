@@ -32,9 +32,22 @@ public class main {
 		
 		
 		try {
-						
-			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
-			scrapeStatsForConference(indianhead, db); //Will read stats and print out results. 
+			
+			TeamConferenceSeasonQuickStats t = new TeamConferenceSeasonQuickStats();
+			t.setConferenceId(1);
+			t.setSeasonId(1);
+			t.setTeamId(7);
+			t.setWins(14);
+			t.setLosses(2);
+			t.setOverall("19-6-0");
+			
+			db.addTeamRecord(t);
+			
+			ArrayList<TeamConferenceSeasonQuickStats> list = db.getAllForConference(1);
+			list.stream().forEach(System.out::println);
+			
+			//ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
+			//scrapeStatsForConference(indianhead, db); //Will read stats and print out results. 
 			
 //			ArrayList<TeamConferenceSeasonQuickStats> stats = indianhead.readStatsTable(2);
 //			
