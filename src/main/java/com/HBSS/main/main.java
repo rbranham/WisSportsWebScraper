@@ -36,6 +36,11 @@ public class main {
 			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
 			scrapeStatsForConference(indianhead, db); //Will read stats and print out results. 
 			
+//			ArrayList<TeamConferenceSeasonQuickStats> stats = indianhead.readStatsTable(2);
+//			
+//			System.out.println("Trying to print stats...");
+//			stats.stream().forEach(System.out::println);
+			
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,8 +72,11 @@ public class main {
 		//Prep conference page
 		ConferencePage indianHead = new ConferencePage(driver, conference, db);
 		indianHead.goTo(INDIANHEAD_STRING); //TODO: This string should probably be in conference database??
-				
-		//customSleep();
+		
+		driver.manage().window().maximize(); //Full screen
+		System.out.println("Conference Page Loaded");
+		customSleep();
+		
 		
 		return indianHead;
 		
@@ -78,10 +86,14 @@ public class main {
 	private static void scrapeStatsForConference(ConferencePage conferencePage, DAOInterface db) throws SQLException{
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
+		System.out.println("Starting read, passing in seasons: ");
 		
-		//Season startingSeason = seasons.remove(0);  //TODO: Change this to not require a starting season
-		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conferencePage.getStatsForSeasonList(seasons); //, startingSeason
-				
+		seasons.stream().forEach(System.out::println);
+		System.out.println("-----------------------");
+
+		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> temp = conferencePage.getStatsForSeasonList(seasons); 
+		
+		System.out.println("Scrape finished, displaying results: ");
 		displayStats(temp);
 		
 	}
@@ -96,6 +108,8 @@ public class main {
 			}
 		
 		}
+		
+		System.out.println("Done displaying results");
 		
 	}
 	

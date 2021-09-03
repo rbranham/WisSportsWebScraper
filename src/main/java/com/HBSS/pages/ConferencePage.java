@@ -72,11 +72,13 @@ public class ConferencePage extends PageSuper {
 		
 		//Check if current page matches first season, if so read first
 		if( driver.findElement(tableLabel).getText().contains( seasons.get(0).getSeasonString()) ){ 
+			System.out.println("Current page matches season: " + seasons.get(0).getSeasonString() + " will read first");
 			Season currentPageSeason = seasons.remove(0);
 			masterList.add(readStatsTable(currentPageSeason.getId()));
 		}
 		
 		//Go through each season and get stats
+		System.out.println("Beginning main read loop");
 		for(Season s: seasons) {
 			
 			changeSeasonTo(s.getSeasonString());
@@ -97,8 +99,8 @@ public class ConferencePage extends PageSuper {
 	 * @param seasonText
 	 */
 	public void changeSeasonTo(String seasonText) {
-		
 		System.out.println("Opening season: " + seasonText);
+		
 		openSeasonCallout();
 		
 		WebElement dropdown = driver.findElement(seasonCallout).findElement(By.xpath(".//div[2]/select"));
@@ -126,27 +128,41 @@ public class ConferencePage extends PageSuper {
 	 * @return ArrayList<TeamConferenceSeasonQuickStats>
 	 */
 	public ArrayList<TeamConferenceSeasonQuickStats> readStatsTable(int seasonId){
+		System.out.println("Attempting to read stats table for season ID: " + seasonId);
+		
 		ArrayList<TeamConferenceSeasonQuickStats> tableContents = new ArrayList<TeamConferenceSeasonQuickStats>();
 		
 		List<WebElement> items = driver.findElement(statTable)
 				.findElements(By.xpath(".//tbody/tr"));
 		
 		for(WebElement i : items) {
+			System.out.println("Reading from row with: " + i.getText());
 			
 			List<WebElement> e = i.findElements(By.xpath(".//td"));
-
+			
+			//System.out.println("Split row up into: " + e.size() + " columns");
+			
+			//e.stream().forEach(c -> System.out.println(c.getText()));
+			
 			//-- Construct a stat line --------------------
 			TeamConferenceSeasonQuickStats temp = new TeamConferenceSeasonQuickStats();
 			temp.setSeasonId(seasonId); 							//seasonId; 
 			temp.setConferenceId(conference.getId());				//conferenceId; 
-			temp.setTeamId(findMatchingTeamId(e.get(1).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
+			temp.setTeamId(findMatchingTeamId(e.get(0).getText())); //teamId  	- Takes the string and calls a function to lookup a matching id for team
 			temp.setWins(Integer.parseInt(e.get(2).getText()));		//wins;
-			temp.setWins(Integer.parseInt(e.get(3).getText()));		//losses; 
+			temp.setLosses(Integer.parseInt(e.get(3).getText()));		//losses; 
 			temp.setStreak(findStreak(e));							//streak; 	
 			temp.setOverall(findOverall(e));						//overall;		
 			
+			System.out.println("----Stat created --------");
+			System.out.println(temp);
+			System.out.println("----------");
+			
+			tableContents.add(temp);
+			
 		}
 		
+		System.out.println("Returning stats for seasonId: " + seasonId);
 		return tableContents;
 	}
 	
@@ -180,6 +196,7 @@ public class ConferencePage extends PageSuper {
 	 * @return teamId
 	 */
 	private int findMatchingTeamId(String teamName) {
+		System.out.println("Attempting to find team: " + teamName);
 		
 		//Wish we could decouple needing database, but can't think of way to. 
 		
