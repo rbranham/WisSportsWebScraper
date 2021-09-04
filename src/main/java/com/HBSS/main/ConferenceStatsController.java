@@ -18,8 +18,6 @@ import com.HBSS.models.*;
  */
 @RestController
 public class ConferenceStatsController {
-
-	//TODO: This creates a lot of connections that don't get closed need to be careful!
 	
 	/**
 	 * End point to return all stats for a conference id. 
@@ -30,9 +28,8 @@ public class ConferenceStatsController {
 	@GetMapping("/conferences/{confId}")
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStats(@PathVariable Integer confId) {
 		
-		try {
-			
-			DAOInterface db = MySQLDAO.getInstance();			
+		try(DAOInterface db = MySQLDAO.getInstance();) {
+					
 			return db.getAllForConference(confId);
 			
 		} catch(Exception e) {
@@ -50,9 +47,10 @@ public class ConferenceStatsController {
 	@GetMapping("/conferences")
 	public ArrayList<Conference> getConferences() {
 		
-		try {
-			DAOInterface db = MySQLDAO.getInstance();
+		try (DAOInterface db = MySQLDAO.getInstance();) {
+			
 			return db.getAllConferences();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -68,8 +66,7 @@ public class ConferenceStatsController {
 	@GetMapping("/teams")
 	public ArrayList<Team> getTeams(){
 		
-		try {
-			DAOInterface db = MySQLDAO.getInstance();
+		try (DAOInterface db = MySQLDAO.getInstance();) {
 			return db.getAllTeams();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -87,8 +84,7 @@ public class ConferenceStatsController {
 	@GetMapping("/teams/{teamId}")
 	public Team getTeam(@PathVariable Integer teamId) {
 		
-		try {
-			DAOInterface db = MySQLDAO.getInstance();
+		try (DAOInterface db = MySQLDAO.getInstance();) {
 			return db.getTeam(teamId);
 		} catch(Exception e) {
 			e.printStackTrace();

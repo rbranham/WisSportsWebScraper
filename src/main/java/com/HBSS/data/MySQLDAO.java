@@ -160,6 +160,7 @@ public class MySQLDAO implements DAOInterface {
 	public void close() {
 		try {
 			conn.close();
+			System.out.println("Connection closed");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
