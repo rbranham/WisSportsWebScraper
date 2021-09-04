@@ -76,7 +76,7 @@ public class ConferenceStatsController {
 	}
 	
 	/**
-	 * End Point to return a specfic team in database
+	 * End Point to return a specific team in database
 	 * Spring will auto convert to json using Jackson
 	 * @param teamId
 	 * @return
@@ -91,6 +91,21 @@ public class ConferenceStatsController {
 			return null;
 		}
 		
+	}
+	
+	/**
+	 * End Point to return all seasons in database
+	 * Spring will auto convert to json using Jackson
+	 * @return
+	 */
+	@GetMapping("/seasons")
+	public ArrayList<Season> getSeasons(){
+		try (DAOInterface db = MySQLDAO.getInstance();) {
+			return db.getAllSeasons();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	
