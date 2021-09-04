@@ -1,5 +1,6 @@
 package com.HBSS.data;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import com.HBSS.models.*;
  * @author Roger branham
  *
  */
-public interface DAOInterface {
+public interface DAOInterface extends Closeable{
 	
 	//CRUD for a season
 	public void addSeason(Season s) throws IllegalArgumentException, SQLException;
@@ -42,4 +43,6 @@ public interface DAOInterface {
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForSeason(int conferenceId, int seasonId);
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStatsForTeam(int conferenceId, int teamId) throws SQLException;
 	public ArrayList<TeamConferenceSeasonQuickStats> getAllForConference(int conferenceId) throws SQLException; 
+	
+	//public void close(); 
 }

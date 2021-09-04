@@ -156,6 +156,15 @@ public class MySQLDAO implements DAOInterface {
         }
 	}
 
+	@Override
+	public void close() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	//Implemented methods ----------------------------------------------
 	//TODO: Still a lot of boiler plate, could probably create generic add, delete, getall, getBy functions, and pass type, SQL string, and map function in

@@ -19,6 +19,7 @@ import com.HBSS.models.*;
 @RestController
 public class ConferenceStatsController {
 
+	//TODO: This creates a lot of connections that don't get closed need to be careful!
 	
 	/**
 	 * End point to return all stats for a conference id. 
@@ -58,4 +59,43 @@ public class ConferenceStatsController {
 		}
 		
 	}
+	
+	/**
+	 * End Point to return all teams in database
+	 * Spring will auto convert to json using Jackson
+	 * @return
+	 */
+	@GetMapping("/teams")
+	public ArrayList<Team> getTeams(){
+		
+		try {
+			DAOInterface db = MySQLDAO.getInstance();
+			return db.getAllTeams();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * End Point to return a specfic team in database
+	 * Spring will auto convert to json using Jackson
+	 * @param teamId
+	 * @return
+	 */
+	@GetMapping("/teams/{teamId}")
+	public Team getTeam(@PathVariable Integer teamId) {
+		
+		try {
+			DAOInterface db = MySQLDAO.getInstance();
+			return db.getTeam(teamId);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	
 }
