@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.HBSS.data.DAOInterface;
 import com.HBSS.data.MySQLDAO;
-import com.HBSS.models.TeamConferenceSeasonQuickStats;
+import com.HBSS.models.*;
 
 /**
  * Controller for conference stats endpoints. 
@@ -19,11 +19,6 @@ import com.HBSS.models.TeamConferenceSeasonQuickStats;
 @RestController
 public class ConferenceStatsController {
 
-	@GetMapping("/test") 
-	public String test() {
-		
-		return "Hello World";
-	}
 	
 	/**
 	 * End point to return all stats for a conference id. 
@@ -31,7 +26,7 @@ public class ConferenceStatsController {
 	 * @param confId
 	 * @return List of conference quick stats for a conference
 	 */
-	@GetMapping("/conference_stats/{confId}")
+	@GetMapping("/conferences/{confId}")
 	public ArrayList<TeamConferenceSeasonQuickStats> getConferenceStats(@PathVariable Integer confId) {
 		
 		try {
@@ -39,6 +34,24 @@ public class ConferenceStatsController {
 			DAOInterface db = MySQLDAO.getInstance();			
 			return db.getAllForConference(confId);
 			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * End Point to return all conferences in database
+	 * Spring will auto convert to json using Jackson
+	 * @return
+	 */
+	@GetMapping("/conferences")
+	public ArrayList<Conference> getConferences() {
+		
+		try {
+			DAOInterface db = MySQLDAO.getInstance();
+			return db.getAllConferences();
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
