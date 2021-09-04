@@ -33,8 +33,13 @@ After scraping a conference, or seperately, as it doesn't really matter, you can
 Names are fairly self explanatory. Try them out in postman, or just look at the underlying data models to make sense of what they return. 
 
 /conferences
+
+
 /conference/{confId}
+
 /teams
+
 /teams/{teamsId}
+
 /seasons
 
