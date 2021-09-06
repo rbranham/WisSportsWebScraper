@@ -35,9 +35,9 @@ public class main {
 //			db.getAllConferences().stream().forEach(System.out::println);
 			
 			// Main code to run scraper ----------------------------------------------------------
-			ConferencePage indianhead = setupConferencePageCode(db.getConference(3), db); //1 - Indianhead conference, 3 - Big Eight
-//			ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> bigList = scrapeStatsForConference(indianhead, db); //Will read stats 
-//			writeStats(bigList, db); //Write into database
+			ConferencePage confPage = setupConferencePageCode(db.getConference(3), db); //1 - Indianhead conference, 3 - Big Eight
+			ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> bigList = scrapeStatsForConference(confPage, db); //Will read stats 
+			writeStats(bigList, db); //Write into database
 			
 			
 			
