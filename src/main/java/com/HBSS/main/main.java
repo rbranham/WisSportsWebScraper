@@ -14,11 +14,11 @@ import com.HBSS.models.*;
 import com.HBSS.pages.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.xdevapi.DbDoc;
 
 public class main {
 
 	private final static String DRIVER_PATH = "/Users/Roger/Documents/Tools/chromedriver.exe";
-	private final static String INDIANHEAD_STRING = "5798944-indianhead";
 	
 	public static void main(String[] args) {
 		
@@ -27,20 +27,18 @@ public class main {
 		
 		try {
 			
-
-//			ConferencePage indianhead = setupConferencePageCode(db.getConference(1), db); //1 - Indianhead conference
+//			Conference c = new Conference(); 
+//			c.setConferenceName("Big Eight");
+//			c.setEndpoint("554103-big-eight");
+//			
+//			db.addConference(c);
+//			db.getAllConferences().stream().forEach(System.out::println);
+			
+			// Main code to run scraper ----------------------------------------------------------
+			ConferencePage indianhead = setupConferencePageCode(db.getConference(3), db); //1 - Indianhead conference, 3 - Big Eight
 //			ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> bigList = scrapeStatsForConference(indianhead, db); //Will read stats 
 //			writeStats(bigList, db); //Write into database
 			
-//			System.out.println("Trying to print stats...");
-//			stats.stream().forEach(System.out::println);
-			
-			
-			//Load stats
-			ArrayList<TeamConferenceSeasonQuickStats> list = db.getAllForConference(1);
-			//list.stream().forEach(System.out::println);
-					
-			System.out.println(createJson(list));
 			
 			
 		} catch (IllegalArgumentException e) {
@@ -52,9 +50,6 @@ public class main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		//Web Scrapping manual testing
-//		mainCode(); 	
 		
 	}
 	
@@ -74,15 +69,15 @@ public class main {
 		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		
 		//Prep conference page
-		ConferencePage indianHead = new ConferencePage(driver, conference, db);
-		indianHead.goTo(INDIANHEAD_STRING); //TODO: This string should probably be in conference database??
+		ConferencePage confPage = new ConferencePage(driver, conference, db);
+		confPage.goTo(conference.getEndpoint()); 
 		
 		driver.manage().window().maximize(); //Full screen
 		System.out.println("Conference Page Loaded");
 		customSleep();
 		
 		
-		return indianHead;
+		return confPage;
 		
 	}
 	
@@ -90,7 +85,19 @@ public class main {
 	private static ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> scrapeStatsForConference(ConferencePage conferencePage, DAOInterface db) throws SQLException{
 		
 		ArrayList<Season> seasons = db.getAllSeasons(); 
-		System.out.println("Starting read, passing in seasons: ");
+		//System.out.println("Starting read, passing in seasons: ");
+//		
+//		//"2020-21"
+//		//"2018-19"
+//		
+//		ArrayList<Integer> indexes = new ArrayList<Integer>(); 
+//		
+//		for(int i = 0; i < seasons.size(); i++) {
+//			if(seasons.get(i).getSeasonString().equals("2019-20") || seasons.get(i).getSeasonString().equals("2020-21") || seasons.get(i).getSeasonString().equals("2018-19")) {
+//				indexes.add(i);
+//			}
+//		}
+		
 		
 		seasons.stream().forEach(System.out::println);
 		System.out.println("-----------------------");

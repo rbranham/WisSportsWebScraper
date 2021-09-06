@@ -19,5 +19,6 @@ public class Conference {
 	
 	private Integer id; 
 	private String conferenceName;
+	private String endpoint;
 	
 }

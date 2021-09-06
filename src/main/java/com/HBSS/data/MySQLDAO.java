@@ -44,6 +44,7 @@ public class MySQLDAO implements DAOInterface {
 	final private String CONFERENCE_TABLE = "conferences"; 
 	final private String CONFERENCE_ID = "idconferences"; 
 	final private String CONFERENCE_NAME = "conference_name"; 
+	final private String CONFERENCE_ENDPOINT = "endpoint";
 	
 	//TeamSeasonConference Stats table
 	final private String STATS_TABLE = "conference_stats";
@@ -76,7 +77,7 @@ public class MySQLDAO implements DAOInterface {
 	final private String SQL_CONFERENCE_DELETE =
 			DAOUtil.generateDeleteByOneColumn(CONFERENCE_TABLE, CONFERENCE_ID); 
 	final private String SQL_CONFERENCE_INSERT =
-			DAOUtil.generateInsert(CONFERENCE_TABLE, new ArrayList<String>(Arrays.asList(CONFERENCE_NAME)));
+			DAOUtil.generateInsert(CONFERENCE_TABLE, new ArrayList<String>(Arrays.asList(CONFERENCE_NAME, CONFERENCE_ENDPOINT)));
 	
 	//CRUD for team table
 	final private String SQL_TEAM_GET_ALL = 
@@ -272,7 +273,8 @@ public class MySQLDAO implements DAOInterface {
 		}
 		
 		Object[] values = {
-				c.getConferenceName()
+				c.getConferenceName(),
+				c.getEndpoint()
 		};
 		
 		try(
@@ -529,6 +531,7 @@ public class MySQLDAO implements DAOInterface {
 		Conference c = new Conference();
 		c.setId(resultSet.getInt(CONFERENCE_ID));
 		c.setConferenceName(resultSet.getString(CONFERENCE_NAME));
+		c.setEndpoint(resultSet.getString(CONFERENCE_ENDPOINT));
 		return c; 
 	}
 	
