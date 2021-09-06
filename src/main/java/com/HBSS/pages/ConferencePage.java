@@ -35,6 +35,9 @@ public class ConferencePage extends PageSuper {
 	final private By statTable = By.className("statTable");
 	final private By tableLabel = By.className("sportTableLabel");
 	
+	final private String stringOnlyInStatTable = "Team";
+	final private String stringOnlyInLabel = "Regular";
+	
 	private Conference conference;
 	private ArrayList<Team> teamsCache;
 	private DAOInterface db; //Wish we could decouple this long term, but need for looking up team info 
@@ -71,7 +74,11 @@ public class ConferencePage extends PageSuper {
 		ArrayList<ArrayList<TeamConferenceSeasonQuickStats>> masterList = new ArrayList<ArrayList<TeamConferenceSeasonQuickStats>>();
 		
 		//Check if current page matches first season, if so read first
-		if( driver.findElement(tableLabel).getText().contains( seasons.get(0).getSeasonString()) ){ 
+		if( findStatTableElement(tableLabel, stringOnlyInLabel) //Call to get/Find the right label
+				.getText()
+				.contains( seasons.get(0).getSeasonString()) 
+				
+				){ 
 			System.out.println("Current page matches season: " + seasons.get(0).getSeasonString() + " will read first");
 			Season currentPageSeason = seasons.remove(0);
 			masterList.add(readStatsTable(currentPageSeason.getId()));
@@ -129,8 +136,17 @@ public class ConferencePage extends PageSuper {
 		
 		ArrayList<TeamConferenceSeasonQuickStats> tableContents = new ArrayList<TeamConferenceSeasonQuickStats>();
 		
-		List<WebElement> items = driver.findElement(statTable)
-				.findElements(By.xpath(".//tbody/tr"));
+		//For some reason, the main stat table is not loading before impliet wait ends. //TODO: 
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		List<WebElement> items = findStatTableElement(statTable, stringOnlyInStatTable) //driver.findElement(statTable) //TODO: multiple stat tables
+				.findElements(By.xpath(".//tbody/tr")); 
 		
 		for(WebElement i : items) {
 			
@@ -224,5 +240,28 @@ public class ConferencePage extends PageSuper {
 		return -1;
 	}
 	
-    
+    /**
+     *  Function to find the an element, with a specfic string from a list of elements
+     *  Used for finding the right stat table and the right stat label
+     */
+	private WebElement findStatTableElement(By by, String string) {
+		List<WebElement> tables = driver.findElements(by);
+		
+		System.out.println("----- Starting find table for: " + string + " in " + tables.size() + " tables. -------");
+		
+		for(WebElement e : tables) {
+			System.out.println("Looking for: " + string + " in this: --------------------------------"); //TODO: 
+			System.out.println(e.getText());
+			System.out.println("----------------------------------------------------------------------");
+			if(e.getText().toLowerCase().contains(string.toLowerCase())) {
+				return e; 
+			}
+		}
+		
+		System.out.println("Couldn't find stat table for page");
+		return null;
+	}
+	
+	
+	
 }
